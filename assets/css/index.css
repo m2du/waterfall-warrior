@@ -4,7 +4,7 @@ body {
     color: white;
 }
 
-body header {
+#game-title {
     font-family: 'Permanent Marker', cursive;
     font-size: 50px;
     line-height: 50px;
@@ -18,10 +18,19 @@ main {
     flex: 1 1 auto;
 }
 
-main canvas {
+#canvas-container {
+    position: relative;
     background: #94746e;
     width: 600px;
     height: 900px;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .flex-column-center {
@@ -31,7 +40,8 @@ main canvas {
 }
 
 aside {
-    padding-top: 30px;
+    font-family: 'Squada One', cursive;
+    padding-top: 50px;
     flex: 1 1 auto;
 }
 

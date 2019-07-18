@@ -94,7 +94,19 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return Game; });\nclass Game {\n    constructor() {\n\n    }\n}\n\nconsole.log('Imported game.js');\n\n//# sourceURL=webpack:///./assets/javascript/game.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return Game; });\nclass Game {\n    constructor() {\n\n    }\n\n    draw(ctx) {\n        let bg = ctx.createLinearGradient(0, 0, 0, ctx.canvas.clientHeight);\n        bg.addColorStop(1, '#66A6FF');\n        bg.addColorStop(0, '#89F7FE');\n        ctx.fillStyle = bg;\n        ctx.fillRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);\n    }\n\n    step(deltaTime) {\n        // update game state\n    }\n}\n\nGame.WIDTH = 600;\nGame.HEIGHT = 900;\n\n//# sourceURL=webpack:///./assets/javascript/game.js?");
+
+/***/ }),
+
+/***/ "./assets/javascript/game_view.js":
+/*!****************************************!*\
+  !*** ./assets/javascript/game_view.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return GameView; });\nclass GameView {\n    constructor(game, ctx) {\n        this.ctx = ctx;\n        this.game = game;\n\n        this.animate = this.animate.bind(this);\n    }\n\n    start() {\n        this.lastTime = 0;\n        requestAnimationFrame(this.animate);\n    }\n\n    animate(time) {\n        const deltaTime = (time - this.lastTime) / 1000;\n        \n        this.game.step(deltaTime);\n        this.game.draw(this.ctx);\n        this.lastTime = time;\n\n        requestAnimationFrame(this.animate);\n    }\n\n    bindKeyHandlers() {\n        // map player input to game logic\n    }\n}\n\n//# sourceURL=webpack:///./assets/javascript/game_view.js?");
 
 /***/ }),
 
@@ -106,7 +118,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./game */ \"./assets/javascript/game.js\");\n\n\nconsole.log('Webpack is working!');\n\n//# sourceURL=webpack:///./assets/javascript/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./game */ \"./assets/javascript/game.js\");\n/* harmony import */ var _game_view__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game_view */ \"./assets/javascript/game_view.js\");\n\n\n\ndocument.addEventListener(\"DOMContentLoaded\", () => {\n    const canvas = document.getElementById('game-canvas');\n    canvas.width = _game__WEBPACK_IMPORTED_MODULE_0__[\"default\"].WIDTH;\n    canvas.height = _game__WEBPACK_IMPORTED_MODULE_0__[\"default\"].HEIGHT;\n\n    const ctx = canvas.getContext('2d');\n    const game = new _game__WEBPACK_IMPORTED_MODULE_0__[\"default\"]();\n    new _game_view__WEBPACK_IMPORTED_MODULE_1__[\"default\"](game, ctx).start();\n});\n\n//# sourceURL=webpack:///./assets/javascript/index.js?");
 
 /***/ })
 

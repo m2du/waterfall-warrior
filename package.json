@@ -1,0 +1,27 @@
+{
+  "name": "waterfall-warrior",
+  "version": "1.0.0",
+  "description": "## Background and Overview Waterfall Warrior is a game where the goal of the player is to jump on falling boulders and get as high as possible. Falling boulders will follow a semi-random pattern to prevent each attempt from being exactly the same as the last. Players will be scored based on maximum height reached and time survived.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "webpack --mode=development --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m2du/waterfall-warrior.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/m2du/waterfall-warrior/issues"
+  },
+  "homepage": "https://github.com/m2du/waterfall-warrior#readme",
+  "dependencies": {
+    "webpack": "^4.36.1"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.6"
+  }
+}

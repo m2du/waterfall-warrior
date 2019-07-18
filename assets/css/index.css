@@ -1,0 +1,42 @@
+@import 'reset.css';
+body {
+    background: #3e2723;
+    color: white;
+}
+
+body header {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 50px;
+    line-height: 50px;
+    padding: 20px;
+}
+
+main {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex: 1 1 auto;
+}
+
+main canvas {
+    background: #94746e;
+    width: 600px;
+    height: 900px;
+}
+
+.flex-column-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+aside {
+    padding-top: 30px;
+    flex: 1 1 auto;
+}
+
+aside header {
+    font-size: 30px;
+    line-height: 30px;
+    padding: 12px;
+}

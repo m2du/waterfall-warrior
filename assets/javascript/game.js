@@ -17,6 +17,3 @@ export default class Game {
         // TODO
     }
 }
-
-Game.WIDTH = 700;
-Game.HEIGHT = 850;

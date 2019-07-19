@@ -1,6 +1,10 @@
+import { 
+    GAME_WIDTH, GAME_HEIGHT,
+    PLAYER_DRAW_WIDTH, PLAYER_DRAW_HEIGHT,
+    PLAYER_WIDTH, PLAYER_HEIGHT
+} from './constants';
 import Vector2 from './util/vector2';
 import MovingObject from "./moving_object";
-import Game from './game';
 
 import PlayerState from './movement/state/player_state';
 import PlayerController from './movement/player_controller';
@@ -11,7 +15,7 @@ import AnimationManager from './util/animation_manager';
 export default class Player extends MovingObject {
     constructor(options) {
         super(options);
-        this.pos = new Vector2(Game.WIDTH / 2, 100);
+        this.pos = new Vector2(GAME_WIDTH / 2, 100);
         this.vel = Vector2.zero;
 
         this.initMovementAndState();
@@ -19,8 +23,8 @@ export default class Player extends MovingObject {
     }
 
     draw(ctx) {
-        const drawX = Game.WIDTH - this.pos.x - Player.DRAW_WIDTH / 2;
-        const drawY = Game.HEIGHT - this.pos.y - Player.DRAW_HEIGHT;
+        const drawX = GAME_WIDTH - this.pos.x - PLAYER_DRAW_WIDTH / 2;
+        const drawY = GAME_HEIGHT - this.pos.y - PLAYER_DRAW_HEIGHT;
 
         // img, sourceX, sourceY, sourceH, sourceW, canvasX, canvasY, width, height
         ctx.drawImage(this.imageRight, ...this.animationManager.sprite, 100, 74,
@@ -28,8 +32,8 @@ export default class Player extends MovingObject {
         
         // draw player hitbox
         // ctx.strokeStyle = 'red';
-        // ctx.rect(Game.WIDTH - this.pos.x - Player.WIDTH / 2,
-        //     Game.HEIGHT - this.pos.y - Player.HEIGHT, Player.WIDTH, Player.HEIGHT);
+        // ctx.rect(GAME_WIDTH - this.pos.x - PLAYER_WIDTH / 2,
+        //     GAME_HEIGHT - this.pos.y - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT);
         // ctx.stroke();
     }
 
@@ -68,8 +72,3 @@ export default class Player extends MovingObject {
         PlayerState.animator = this.animationManager;
     }
 }
-
-Player.DRAW_WIDTH = 80;
-Player.DRAW_HEIGHT = 59;
-Player.WIDTH = 28;
-Player.HEIGHT = 48;

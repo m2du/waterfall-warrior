@@ -1,7 +1,9 @@
 import PlayerState from './player_state';
 
 export default class AirborneState {
-    constructor() {}
+    constructor() {
+        this.name = "AIRBORNE";
+    }
 
     handleInput(controller, inputFlags) {
         if (controller.grounded) {

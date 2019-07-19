@@ -22,9 +22,9 @@ export default class InputManager {
         const inputFlags = this.inputFlags;
 
         if (e.code === 'ArrowLeft') {
-            inputFlags.dirX = 1;
-        } else if (e.code === 'ArrowRight') {
             inputFlags.dirX = -1;
+        } else if (e.code === 'ArrowRight') {
+            inputFlags.dirX = 1;
         }
 
         if (e.code === 'ArrowUp') {
@@ -42,9 +42,9 @@ export default class InputManager {
     keyup(e) {
         const inputFlags = this.inputFlags;
 
-        if (e.code === 'ArrowLeft' && inputFlags.dirX > 0) {
+        if (e.code === 'ArrowLeft' && inputFlags.dirX < 0) {
             inputFlags.dirX = 0;
-        } else if (e.code === 'ArrowRight' && inputFlags.dirX < 0) {
+        } else if (e.code === 'ArrowRight' && inputFlags.dirX > 0) {
             inputFlags.dirX = 0;
         }
 

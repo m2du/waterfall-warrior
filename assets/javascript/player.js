@@ -1,7 +1,10 @@
-import { 
-    GAME_WIDTH, GAME_HEIGHT,
-    PLAYER_DRAW_WIDTH, PLAYER_DRAW_HEIGHT,
-    PLAYER_WIDTH, PLAYER_HEIGHT
+import {
+    GAME_WIDTH,
+    GAME_HEIGHT,
+    PLAYER_DRAW_WIDTH,
+    PLAYER_DRAW_HEIGHT,
+    PLAYER_WIDTH,
+    PLAYER_HEIGHT
 } from './constants';
 import Vector2 from './util/vector2';
 import MovingObject from "./moving_object";
@@ -23,13 +26,19 @@ export default class Player extends MovingObject {
     }
 
     draw(ctx) {
-        const drawX = GAME_WIDTH - this.pos.x - PLAYER_DRAW_WIDTH / 2;
+        const drawX = this.pos.x - PLAYER_DRAW_WIDTH / 2;
         const drawY = GAME_HEIGHT - this.pos.y - PLAYER_DRAW_HEIGHT;
 
         // img, sourceX, sourceY, sourceH, sourceW, canvasX, canvasY, width, height
-        ctx.drawImage(this.imageRight, ...this.animationManager.sprite, 100, 74,
-            drawX, drawY, 80, 59);
-        
+        if (this.facing === 1) {
+            ctx.drawImage(this.imageRight, ...this.animationManager.sprite, 100, 74,
+                drawX, drawY, 80, 59);
+        } else {
+            ctx.drawImage(this.imageLeft, ...this.animationManager.sprite, 100, 74,
+                drawX, drawY, 80, 59);
+        }
+
+
         // draw player hitbox
         // ctx.strokeStyle = 'red';
         // ctx.rect(GAME_WIDTH - this.pos.x - PLAYER_WIDTH / 2,
@@ -50,7 +59,19 @@ export default class Player extends MovingObject {
         console.log(this.vel);
 
         // update animation
-        this.animationManager.idle(deltaTime);
+        this.updateAnimation(deltaTime, inputFlags.dirX);
+    }
+
+    updateAnimation(deltaTime, dirX) {
+        this.facing = (dirX != 0) ? dirX : this.facing;
+
+        switch (this.currentState.name) {
+            case "WALKING":
+                this.animationManager.walk(deltaTime, this.facing);
+                break;
+            default: 
+                this.animationManager.idle(deltaTime, this.facing);
+        }
     }
 
     remove() {
@@ -61,6 +82,7 @@ export default class Player extends MovingObject {
         this.inputManager = new InputManager(this);
         this.controller = new PlayerController(this);
         this.currentState = PlayerState.IDLE;
+        this.facing = 1;
     }
 
     initDrawAndAnimation() {

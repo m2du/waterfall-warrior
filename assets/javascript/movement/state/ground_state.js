@@ -13,8 +13,6 @@ class GroundState {
             return PlayerState.JUMPING;
         }
 
-        console.log(inputFlags);
-
         if (inputFlags.dirX !== 0) {
             return PlayerState.WALKING;
         }

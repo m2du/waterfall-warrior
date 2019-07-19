@@ -6,7 +6,7 @@ export default class JumpingState {
     }
 
     handleInput(controller, inputFlags) {
-        return PlayerState.AIRBORNE;
+        return PlayerState.RISING;
     }
 
     handleUpdate(controller, inputFlags) {

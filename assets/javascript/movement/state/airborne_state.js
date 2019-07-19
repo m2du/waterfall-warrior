@@ -13,7 +13,11 @@ export default class AirborneState {
             return PlayerState.IDLE;
         }
 
-        return PlayerState.AIRBORNE;
+        if (controller.isRising()) {
+            return PlayerState.RISING;
+        } else {
+            return PlayerState.FALLING;
+        }
     }
 
     handleUpdate(controller, inputFlags) {

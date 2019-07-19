@@ -11,8 +11,8 @@ export default class PlayerController {
         this.vel = player.vel;
 
         const walkSpeed = GAME_WIDTH * 0.3;
-        const jumpHeight = PLAYER_HEIGHT * 1.25;
-        const jumpDist = PLAYER_WIDTH * 3;
+        const jumpHeight = PLAYER_HEIGHT * 1.5;
+        const jumpDist = PLAYER_WIDTH * 5;
         const jumpVel = (2 * walkSpeed * jumpHeight) / (jumpDist / 2);
         const gravity = (-2 * jumpHeight * Math.pow(walkSpeed, 2)) / Math.pow(jumpDist / 2, 2);
 
@@ -61,6 +61,10 @@ export default class PlayerController {
             this.vel.y = 0;
         }
     }
+
+    isRising() {
+        return this.vel.y > 0;
+    }
 }
 
-const MAX_FALL_SPEED = -200;
+const MAX_FALL_SPEED = -400;

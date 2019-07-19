@@ -55,8 +55,6 @@ export default class Player extends MovingObject {
 
         // move player with controller
         this.controller.move(deltaTime);
-        console.log(this.pos);
-        console.log(this.vel);
 
         // update animation
         this.updateAnimation(deltaTime, inputFlags.dirX);
@@ -68,6 +66,12 @@ export default class Player extends MovingObject {
         switch (this.currentState.name) {
             case "WALKING":
                 this.animationManager.walk(deltaTime, this.facing);
+                break;
+            case "RISING":
+                this.animationManager.jump(deltaTime, this.facing);
+                break;
+            case "FALLING":
+                this.animationManager.fall(deltaTime, this.facing);
                 break;
             default: 
                 this.animationManager.idle(deltaTime, this.facing);

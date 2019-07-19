@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     canvas.height = Game.HEIGHT;
 
     const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
     const game = new Game();
     new GameView(game, ctx).start();
 });

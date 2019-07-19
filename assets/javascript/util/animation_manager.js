@@ -25,4 +25,8 @@ export default class AnimationManager {
             this.lastFrameTime = 0;
         }
     }
+
+    resetFrame() {
+        this.frame = 0;
+    }
 }

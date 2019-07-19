@@ -8,9 +8,10 @@ class GroundState {
         //     return PlayerState.airborne;
         // }
 
-        // if (inputFlags.jumpHeldDown) {
-        //     return PlayerState.jumping;
-        // }
+        if (inputFlags.jumpHeld) {
+            inputFlags.jumpPressed = false;
+            return PlayerState.JUMPING;
+        }
 
         console.log(inputFlags);
 

@@ -19,10 +19,18 @@ export default class Player extends MovingObject {
     }
 
     draw(ctx) {
+        const drawX = Game.WIDTH - this.pos.x - Player.DRAW_WIDTH / 2;
+        const drawY = Game.HEIGHT - this.pos.y - Player.DRAW_HEIGHT;
+
         // img, sourceX, sourceY, sourceH, sourceW, canvasX, canvasY, width, height
         ctx.drawImage(this.imageRight, ...this.animationManager.sprite, 100, 74,
-            Game.WIDTH - this.pos.x - Player.DRAW_WIDTH / 2,
-            Game.HEIGHT - this.pos.y - Player.DRAW_HEIGHT, 80, 59);
+            drawX, drawY, 80, 59);
+        
+        // draw player hitbox
+        // ctx.strokeStyle = 'red';
+        // ctx.rect(Game.WIDTH - this.pos.x - Player.WIDTH / 2,
+        //     Game.HEIGHT - this.pos.y - Player.HEIGHT, Player.WIDTH, Player.HEIGHT);
+        // ctx.stroke();
     }
 
     move(deltaTime) {
@@ -63,5 +71,5 @@ export default class Player extends MovingObject {
 
 Player.DRAW_WIDTH = 80;
 Player.DRAW_HEIGHT = 59;
-Player.WIDTH = 80;
-Player.HEIGHT = 59;
+Player.WIDTH = 28;
+Player.HEIGHT = 48;

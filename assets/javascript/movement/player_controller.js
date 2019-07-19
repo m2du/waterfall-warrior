@@ -7,7 +7,7 @@ export default class PlayerController {
         this.pos = player.pos;
         this.vel = player.vel;
 
-        const walkSpeed = Player.WIDTH;
+        const walkSpeed = Player.WIDTH * 3;
         const jumpHeight = Player.HEIGHT;
         const jumpDist = Player.WIDTH * 2;
         const jumpVel = (2 * walkSpeed * jumpHeight) / (jumpDist / 2);
@@ -23,6 +23,15 @@ export default class PlayerController {
     }
 
     walk(inputFlags) {
+        this.vel.x = inputFlags.dirX * this.walkSpeed;
+    }
+
+    jump() {
+        this.grounded = false;
+        this.vel.y = this.jumpVel;
+    }
+
+    airborne(inputFlags) {
         this.vel.x = inputFlags.dirX * this.walkSpeed;
     }
 
@@ -44,6 +53,7 @@ export default class PlayerController {
 
         // reset vertical velocity if grounded
         if (this.pos.y <= 0) {
+            this.grounded = true;
             this.pos.y = 0;
             this.vel.y = 0;
         }

@@ -37,6 +37,7 @@ export default class GameView {
         // let bg = ctx.createLinearGradient(0, 0, 0, ctx.canvas.clientHeight);
         // bg.addColorStop(1, '#66A6FF');
         // bg.addColorStop(0, '#89F7FE');
+        ctx.clearRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
         ctx.fillStyle = '#66A6FF';
         ctx.fillRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
 

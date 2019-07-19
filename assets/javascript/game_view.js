@@ -5,11 +5,11 @@ export default class GameView {
 
         // waterfall animation setup
         this.waterbar = new Image();
-        this.waterbar.src = '../assets/images/waterbar.png';
-        this.barHeight = 35;
-        this.waterfallSpeed = 800;
-        this.y1 = 460;
-        this.y2 = -35;
+        this.waterbar.src = '../assets/images/waterfall_sprite_sheet.png';
+        this.waterfallSpeed = .6;
+        this.waterfallFrames = 6;
+        this.lastFrameTime = 0;
+        this.frame = 0;
 
         this.animate = this.animate.bind(this);
     }
@@ -23,7 +23,7 @@ export default class GameView {
         const deltaTime = (time - this.lastTime) / 1000;
 
         this.game.step(deltaTime);
-        
+
         // draw next frame
         this.drawBg(deltaTime);
         this.game.draw(this.ctx);
@@ -40,18 +40,16 @@ export default class GameView {
         ctx.fillStyle = '#66A6FF';
         ctx.fillRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
 
+        if (this.lastFrameTime < this.waterfallSpeed / this.waterfallFrames) {
+            this.lastFrameTime += deltaTime;
+        } else {
+            this.frame = (this.frame + 1) % this.waterfallFrames;
+            this.lastFrameTime = 0;
+        }
 
         // img, sourceX, sourceY, sourceH, sourceW, canvasX, canvasY, width, height
-        ctx.drawImage(this.waterbar, 0, 0, 600, this.barHeight,
-            0, Math.round(this.y1), 700, this.barHeight);
-        ctx.drawImage(this.waterbar, 0, 0, 600, this.barHeight,
-            0, Math.round(this.y2), 700, this.barHeight);
-
-        this.y1 += this.waterfallSpeed * deltaTime;
-        this.y2 += this.waterfallSpeed * deltaTime;
-
-        if (this.y1 > 850) this.y1 = -121;
-        if (this.y2 > 850) this.y2 = -121;
+        ctx.drawImage(this.waterbar, 620 * this.frame, 0, 620, 900,
+            -10, 0, 720, 850);
     }
 
     bindKeyHandlers() {

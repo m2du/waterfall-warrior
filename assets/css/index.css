@@ -21,8 +21,9 @@ main {
 #canvas-container {
     position: relative;
     background: #94746e;
-    width: 600px;
-    height: 900px;
+    width: 700px;
+    height: 850px;
+    border: 2px solid #516c5a
 }
 
 canvas {
@@ -31,6 +32,12 @@ canvas {
     left: 0;
     width: 100%;
     height: 100%;
+}
+
+#canvas-border {
+    padding: 3px;
+    background: linear-gradient(to top, #001d0a, #174928);
+    border: 2px solid #516c5a
 }
 
 .flex-column-center {

@@ -3,6 +3,7 @@ import GroundState from './ground_state';
 export default class IdleState extends GroundState {
     constructor() {
         super();
+        this.name = 'IDLE';
     }
 
     handleInput(controller, inputFlags) {

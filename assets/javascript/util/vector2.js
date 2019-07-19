@@ -14,7 +14,8 @@ export default class Vector2 {
     }
 }
 
-Vector2.up = {x: 0, y: 1};
-Vector2.down = {x: 0, y: -1};
-Vector2.left = {x: -1, y: 0};
-Vector2.right = {x: 1, y: 0};
+Vector2.up = { x: 0, y: 1 };
+Vector2.down = { x: 0, y: -1 };
+Vector2.left = { x: -1, y: 0 };
+Vector2.right = { x: 1, y: 0 };
+Vector2.zero = { x: 0, y: 0 };

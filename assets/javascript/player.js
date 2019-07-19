@@ -61,6 +61,7 @@ export default class Player extends MovingObject {
     }
 
     updateAnimation(deltaTime, dirX) {
+        console.log(this.currentState.name);
         this.facing = (dirX != 0) ? dirX : this.facing;
 
         switch (this.currentState.name) {
@@ -72,6 +73,9 @@ export default class Player extends MovingObject {
                 break;
             case "FALLING":
                 this.animationManager.fall(deltaTime, this.facing);
+                break;
+            case "ROLLING":
+                this.animationManager.roll(deltaTime, this.facing);
                 break;
             default: 
                 this.animationManager.idle(deltaTime, this.facing);

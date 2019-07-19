@@ -5,7 +5,7 @@ export default class InputManager {
             dirX: 0,
             dirY: 0,
             jumpPressed: false,
-            jumpHeld: false
+            newJump: true
         }
 
         this.keydown = this.keydown.bind(this);
@@ -34,8 +34,8 @@ export default class InputManager {
         }
 
         if (e.code === 'Space') {
+            inputFlags.newJump = inputFlags.newJump !== inputFlags.jumpPressed;
             inputFlags.jumpPressed = true;
-            inputFlags.jumpHeld = true;
         }
     }
 
@@ -56,7 +56,7 @@ export default class InputManager {
 
         if (e.code === 'Space') {
             inputFlags.jumpHeld = false;
-            inputFlags.jumpPressed = false;
+            inputFlags.newJump = true;
         }
     }
 }

@@ -1,6 +1,8 @@
 import {
-    GAME_WIDTH, GAME_HEIGHT,
-    PLAYER_WIDTH, PLAYER_HEIGHT
+    GAME_WIDTH,
+    GAME_HEIGHT,
+    PLAYER_WIDTH,
+    PLAYER_HEIGHT
 } from '../constants';
 import Vector2 from '../util/vector2';
 
@@ -19,6 +21,8 @@ export default class PlayerController {
         this.walkSpeed = walkSpeed;
         this.jumpVel = jumpVel;
         this.gravity = gravity;
+        this.jumps = 2;
+        this.rolling = false;
     }
 
     idle() {
@@ -29,9 +33,18 @@ export default class PlayerController {
         this.vel.x = inputFlags.dirX * this.walkSpeed;
     }
 
-    jump() {
-        this.grounded = false;
-        this.vel.y = this.jumpVel;
+    jump(inputFlags) {
+        inputFlags.jumpPressed = false;
+
+        if (this.jumps > 0) {
+            if (this.jumps === 1) {
+                this.rolling = true;
+            }
+
+            this.jumps--;
+            this.grounded = false;
+            this.vel.y = this.jumpVel;
+        }
     }
 
     airborne(inputFlags) {
@@ -59,11 +72,21 @@ export default class PlayerController {
             this.grounded = true;
             this.pos.y = 0;
             this.vel.y = 0;
+            this.jumps = 2;
+            this.rolling = false;
         }
     }
 
     isRising() {
         return this.vel.y > 0;
+    }
+
+    isRolling() {
+        if (this.vel.y < MAX_FALL_SPEED) {
+            this.rolling = false;
+        }
+
+        return this.rolling;
     }
 }
 

@@ -8,7 +8,7 @@ class GroundState {
         //     return PlayerState.airborne;
         // }
 
-        if (inputFlags.jumpHeld) {
+        if (inputFlags.jumpPressed) {
             inputFlags.jumpPressed = false;
             return PlayerState.JUMPING;
         }

@@ -22,6 +22,10 @@ export default class AnimationManager {
         this.fallBaseRight = [this._framesFromLeft(1), this._framesFromTop(3)];
         this.fallBaseLeft = [this._framesFromRight(1), this._framesFromTop(3)];
 
+        // roll animation start frames
+        this.rollBaseRight = [this._framesFromLeft(4), this._framesFromTop(2)];
+        this.rollBaseLeft = [this._framesFromRight(4), this._framesFromTop(2)];
+
         // set start animation frame
         this.sprite = [0, 0];
         this.currentAnim = "IDLE";
@@ -70,9 +74,6 @@ export default class AnimationManager {
             this.sprite[0] = this.jumpBaseLeft[0] - PLAYER_SPRITE_WIDTH * this.frame;
             this.sprite[1] = this.jumpBaseLeft[1];
         }
-
-        console.log('jump');
-        console.log(this.sprite);
     }
 
     fall(deltaTime, direction) {
@@ -88,9 +89,32 @@ export default class AnimationManager {
             this.sprite[0] = this.fallBaseLeft[0] - PLAYER_SPRITE_WIDTH * this.frame;
             this.sprite[1] = this.fallBaseLeft[1];
         }
+    }
 
-        console.log('fall');
-        console.log(this.sprite);
+    roll(deltaTime, direction) {
+        const name = "ROLL";
+        const duration = .4;
+        const numFrames = 4;
+        this._step(deltaTime, duration, numFrames, name);
+
+        if (direction === 1) {
+            this.sprite[0] = this.rollBaseRight[0] + PLAYER_SPRITE_WIDTH * this.frame;
+            this.sprite[1] = this.rollBaseRight[1];
+
+            if (this.sprite[0] >= this._framesFromLeft(7)) {
+                this.sprite[0] = 0;
+                this.sprite[1] += PLAYER_SPRITE_HEIGHT;
+            }
+        } else {
+            this.sprite[0] = this.rollBaseLeft[0] - PLAYER_SPRITE_WIDTH * this.frame;
+            this.sprite[1] = this.rollBaseLeft[1];
+
+            if (this.sprite[0] <= this._framesFromRight(7)) {
+                this.sprite[0] = this._framesFromRight(0);
+                this.sprite[1] += PLAYER_SPRITE_HEIGHT;
+            }
+        }
+
     }
 
     _step(deltaTime, duration, numFrames, name) {

@@ -13,6 +13,11 @@ export default class AirborneState {
             return PlayerState.IDLE;
         }
 
+        // console.log(inputFlags);
+        if ((inputFlags.jumpPressed && inputFlags.newJump && controller.jumps > 0) || controller.isRolling()) {
+            return PlayerState.ROLLING;
+        }
+
         if (controller.isRising()) {
             return PlayerState.RISING;
         } else {

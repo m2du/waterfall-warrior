@@ -10,6 +10,6 @@ export default class JumpingState {
     }
 
     handleUpdate(controller, inputFlags) {
-        controller.jump();
+        controller.jump(inputFlags);
     }
 }

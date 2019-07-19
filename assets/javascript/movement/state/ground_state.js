@@ -12,9 +12,11 @@ class GroundState {
         //     return PlayerState.jumping;
         // }
 
-        // if (inputFlags.dirX != 0) {
-        //     return PlayerState.walking;
-        // }
+        console.log(inputFlags);
+
+        if (inputFlags.dirX !== 0) {
+            return PlayerState.WALKING;
+        }
 
         return PlayerState.IDLE;
     }

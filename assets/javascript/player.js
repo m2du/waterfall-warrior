@@ -27,12 +27,15 @@ export default class Player extends MovingObject {
 
     move(deltaTime) {
         const inputFlags = this.inputManager.inputFlags;
+        this.currentState = this.currentState.handleInput(this.controller, inputFlags);
 
         // process state with current inputs
         this.currentState.handleUpdate(this.controller, inputFlags);
 
         // move player with controller
         this.controller.move(deltaTime);
+        console.log(this.pos);
+        console.log(this.vel);
 
         // update animation
         this.animationManager.idle(deltaTime);
@@ -60,3 +63,5 @@ export default class Player extends MovingObject {
 
 Player.DRAW_WIDTH = 80;
 Player.DRAW_HEIGHT = 59;
+Player.WIDTH = 80;
+Player.HEIGHT = 59;

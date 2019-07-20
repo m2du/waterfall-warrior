@@ -1,6 +1,8 @@
 import {
-    GAME_WIDTH, GAME_HEIGHT,
-    PLAYER_WIDTH, PLAYER_HEIGHT
+    GAME_WIDTH,
+    GAME_HEIGHT,
+    PLAYER_WIDTH,
+    PLAYER_HEIGHT
 } from './constants';
 import Vector2 from './util/vector2';
 
@@ -20,10 +22,12 @@ export default class Game {
             game: this,
             pos: new Vector2(GAME_WIDTH / 2, 0),
             size: new Vector2(GAME_WIDTH, 64),
-            vel: Vector2.zero
+            vel: new Vector2(0, 0)
         });
 
         this.blocks = [floor];
+        this.lastBlockTime = 0;
+        this.blocksPerSecond = 1.5;
     }
 
     checkCollisions(moveAmount) {
@@ -31,12 +35,47 @@ export default class Game {
     }
 
     draw(ctx) {
-        this.player.draw(ctx);
         this.blocks.forEach(block => block.draw(ctx));
+        this.player.draw(ctx);
     }
 
     step(deltaTime) {
+        if (this.lastBlockTime < 1 / this.blocksPerSecond) {
+            this.lastBlockTime += deltaTime;
+        } else {
+            this._generateBlock();
+            this.lastBlockTime = 0;
+        }
+
+        this.blocks.forEach(block => block.move(deltaTime));
         this.player.move(deltaTime);
+    }
+
+    _generateBlock() {
+        const unit = 50;
+        const size = new Vector2(
+            Math.floor(Math.random() * 5 + 1) * unit,
+            Math.floor(Math.random() * 3 + 1) * unit
+        );
+        const pos = new Vector2(
+            Math.floor(Math.random() * GAME_WIDTH/(unit * 2)) * (unit * 2) + size.x / 2,
+            GAME_HEIGHT + size.y
+        );
+        const vel = new Vector2(
+            0, -Math.floor(Math.random() * 50 + 100)
+        );
+        this.blocks.push(new Block({ game: this, size, pos, vel }));
+        console.log(this.blocks);
+    }
+
+    isOffScreen(pos, size) {
+        return pos + size < 0;
+    }
+
+    remove(obj) {
+        if (obj instanceof Block) {
+            this.blocks.splice(this.blocks.indexOf(obj), 1);
+        }
     }
 
     end() {

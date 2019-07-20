@@ -19,7 +19,7 @@ export default class Player extends MovingObject {
     constructor(options) {
         super(options);
         this.pos = new Vector2(GAME_WIDTH / 2, 100);
-        this.vel = Vector2.zero;
+        this.vel = new Vector2(0, 0);
 
         this.initMovementAndState();
         this.initDrawAndAnimation();
@@ -75,7 +75,7 @@ export default class Player extends MovingObject {
             case "ROLLING":
                 this.animationManager.roll(deltaTime, this.facing);
                 break;
-            default: 
+            default:
                 this.animationManager.idle(deltaTime, this.facing);
         }
     }

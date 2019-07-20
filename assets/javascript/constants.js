@@ -8,3 +8,4 @@ export const PLAYER_DRAW_HEIGHT = 59;
 
 export const PLAYER_WIDTH = 32;
 export const PLAYER_HEIGHT = 48;
+export const SKIN_WIDTH = 10;

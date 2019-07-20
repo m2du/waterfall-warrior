@@ -28,6 +28,15 @@ export default class Game {
         this.blocks = [floor];
         this.lastBlockTime = 0;
         this.blocksPerSecond = 1.5;
+
+        // create wall - for testing wallslide
+        const wall = new Block({
+            game: this,
+            pos: new Vector2(0, 0),
+            size: new Vector2(50, GAME_HEIGHT),
+            vel: new Vector2(0, 0)
+        });
+        this.blocks.push(wall);
     }
 
     checkCollisions(moveAmount) {
@@ -58,14 +67,13 @@ export default class Game {
             Math.floor(Math.random() * 3 + 1) * unit
         );
         const pos = new Vector2(
-            Math.floor(Math.random() * GAME_WIDTH/(unit * 2)) * (unit * 2) + size.x / 2,
+            Math.floor(Math.random() * GAME_WIDTH / (unit * 2)) * (unit * 2) + size.x / 2,
             GAME_HEIGHT + size.y
         );
         const vel = new Vector2(
             0, -Math.floor(Math.random() * 50 + 100)
         );
-        this.blocks.push(new Block({ game: this, size, pos, vel }));
-        console.log(this.blocks);
+        // this.blocks.push(new Block({ game: this, size, pos, vel }));
     }
 
     isOffScreen(pos, size) {

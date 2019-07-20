@@ -57,6 +57,20 @@ export default class PlayerController {
         }
     }
 
+    wallAction(inputFlags, action) {
+        this.inputFlags = inputFlags;
+        this.wallsliding = true;
+
+        switch(action) {
+            case "CLIMB":
+                break;
+            case "LEAP":
+                break;
+            case "DROP":
+                break;
+        }
+    }
+
     airborne(inputFlags) {
         this.inputFlags = inputFlags;
         this.vel.x = inputFlags.dirX * this.walkSpeed;
@@ -68,6 +82,11 @@ export default class PlayerController {
         this.vel.y += this.gravity * deltaTime;
         if (this.vel.y < MAX_FALL_SPEED) {
             this.vel.y = MAX_FALL_SPEED;
+        }
+
+        // check if wallsliding
+        if (this.wallsliding && this.vel.y < WALLSLIDE_MAX_SPEED) {
+            this.vel.y = WALLSLIDE_MAX_SPEED;
         }
 
         // calc movement vector
@@ -87,14 +106,21 @@ export default class PlayerController {
             this.pos.x = GAME_WIDTH - PLAYER_WIDTH / 2;
         }
 
-        if (this.collisionFlags.below) {
-            this.rolling = false;
+        if (this.isGrounded()) {
             this.jumps = 2;
+            this.rolling = false;
+            this.wallsliding = false;
         }
     }
 
+    wallDirection() {
+        if (this.collisionFlags.left) return -1;
+        if (this.collisionFlags.right) return 1;
+        return 0;
+    }
+
     isGrounded() {
-        this.collisionFlags.below;
+        return this.collisionFlags.below;
     }
 
     isRising() {
@@ -126,3 +152,4 @@ export default class PlayerController {
 }
 
 const MAX_FALL_SPEED = -400;
+const WALLSLIDE_MAX_SPEED = -75;

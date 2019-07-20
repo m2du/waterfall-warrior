@@ -26,6 +26,10 @@ export default class AnimationManager {
         this.rollBaseRight = [this._framesFromLeft(4), this._framesFromTop(2)];
         this.rollBaseLeft = [this._framesFromRight(4), this._framesFromTop(2)];
 
+        // wallslide animation start frames
+        this.wallslideBaseRight = [this._framesFromLeft(2), this._framesFromTop(11)];
+        this.wallslideBaseLeft = [this._framesFromRight(2), this._framesFromTop(11)];
+
         // set start animation frame
         this.sprite = [0, 0];
         this.currentAnim = "IDLE";
@@ -115,6 +119,21 @@ export default class AnimationManager {
             }
         }
 
+    }
+
+    wallslide(deltaTime, direction) {
+        const name = "WALLSLIDE";
+        const duration = .2;
+        const numFrames = 2;
+        this._step(deltaTime, duration, numFrames, name);
+
+        if (direction === 1) {
+            this.sprite[0] = this.wallslideBaseRight[0] + PLAYER_SPRITE_WIDTH * this.frame;
+            this.sprite[1] = this.wallslideBaseRight[1];
+        } else {
+            this.sprite[0] = this.wallslideBaseLeft[0] - PLAYER_SPRITE_WIDTH * this.frame;
+            this.sprite[1] = this.wallslideBaseLeft[1];
+        }
     }
 
     _step(deltaTime, duration, numFrames, name) {

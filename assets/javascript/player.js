@@ -75,6 +75,10 @@ export default class Player extends MovingObject {
             case "ROLLING":
                 this.animationManager.roll(deltaTime, this.facing);
                 break;
+            case "WALLSLIDING":
+                this.facing = this.controller.wallDirection();
+                this.animationManager.wallslide(deltaTime, this.facing);
+                break;
             default:
                 this.animationManager.idle(deltaTime, this.facing);
         }

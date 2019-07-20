@@ -1,6 +1,10 @@
-import { 
-    GAME_WIDTH, GAME_HEIGHT,
-    PLAYER_WIDTH, PLAYER_HEIGHT, SKIN_WIDTH } from './constants';
+import {
+    GAME_WIDTH,
+    GAME_HEIGHT,
+    PLAYER_WIDTH,
+    PLAYER_HEIGHT,
+    SKIN_WIDTH
+} from './constants';
 import Vector2 from './util/vector2';
 import MovingObject from './moving_object';
 

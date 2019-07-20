@@ -4,7 +4,7 @@ class GroundState {
     constructor() {}
 
     handleInput(controller, inputFlags) {
-        if (!controller.collisionFlags.below) {
+        if (!controller.isGrounded()) {
             return PlayerState.FALLING;
         }
 

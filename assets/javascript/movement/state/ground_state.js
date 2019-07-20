@@ -4,9 +4,9 @@ class GroundState {
     constructor() {}
 
     handleInput(controller, inputFlags) {
-        // if (!controller.isGrounded()) {
-        //     return PlayerState.airborne;
-        // }
+        if (!controller.collisionFlags.below) {
+            return PlayerState.FALLING;
+        }
 
         if (inputFlags.jumpPressed) {
             return PlayerState.JUMPING;

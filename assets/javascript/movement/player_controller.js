@@ -13,7 +13,7 @@ export default class PlayerController {
         this.vel = player.vel;
 
         const walkSpeed = GAME_WIDTH * 0.3;
-        const jumpHeight = PLAYER_HEIGHT * 1.5;
+        const jumpHeight = PLAYER_HEIGHT * 2;
         const jumpDist = PLAYER_WIDTH * 5;
         const jumpVel = (2 * walkSpeed * jumpHeight) / (jumpDist / 2);
         const gravity = (-2 * jumpHeight * Math.pow(walkSpeed, 2)) / Math.pow(jumpDist / 2, 2);
@@ -63,6 +63,7 @@ export default class PlayerController {
     }
 
     move(deltaTime) {
+
         // apply gravity
         this.vel.y += this.gravity * deltaTime;
         if (this.vel.y < MAX_FALL_SPEED) {
@@ -79,26 +80,12 @@ export default class PlayerController {
         // apply movement
         this.pos.add(moveAmount);
 
-        // reset vertical velocity if grounded
-        if (this.pos.y <= 0) {
-            this.pos.y = 0;
-            this.vel.y = 0;
-        }
-
+        // prevet movement off sides of screen
         if (this.pos.x - PLAYER_WIDTH / 2 <= 0) {
             this.pos.x = PLAYER_WIDTH / 2;
         } else if (this.pos.x + PLAYER_WIDTH / 2 >= GAME_WIDTH) {
             this.pos.x = GAME_WIDTH - PLAYER_WIDTH / 2;
         }
-
-        if (this.collisionFlags.above || this.collisionFlags.below) {
-            if (this.inputFlags.jumpPressed && this.inputFlags.newJump) {
-                // jumping this frame, do nothing
-            } else {
-                this.vel.y = 0;
-            }
-        }
-
 
         if (this.collisionFlags.below) {
             this.rolling = false;
@@ -120,6 +107,14 @@ export default class PlayerController {
         }
 
         return this.rolling;
+    }
+
+    shrink() {
+        this.player.size.y = PLAYER_HEIGHT * 0.8;
+    }
+
+    grow() {
+        this.player.size.y = PLAYER_HEIGHT;
     }
 
     _resetCollisionFlags() {

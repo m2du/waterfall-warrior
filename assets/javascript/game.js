@@ -47,8 +47,8 @@ export default class Game {
             this.lastBlockTime = 0;
         }
 
-        this.blocks.forEach(block => block.move(deltaTime));
         this.player.move(deltaTime);
+        this.blocks.forEach(block => block.move(deltaTime));
     }
 
     _generateBlock() {

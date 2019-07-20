@@ -24,13 +24,21 @@ export default class Block extends MovingObject {
 
         // check block top, player bottom
         if ((playerBottom + moveAmount.y < top && playerTop > top) &&
-            ((playerLeft >= left && playerLeft <= right) ||
-                (playerRight <= right && playerRight >= left))) {
+            ((playerLeft > left && playerLeft < right) ||
+                (playerRight < right && playerRight > left))) {
             moveAmount.y = top - playerBottom;
             player.controller.collisionFlags.below = true;
+            player.vel.y = this.vel.y;
         }
 
         // check block bottom, player top
+        if ((playerTop + moveAmount.y > bottom && playerBottom < top) &&
+            ((playerLeft > left && playerLeft < right) ||
+                (playerRight < right && playerRight > left))) {
+            moveAmount.y = bottom - playerTop;
+            player.controller.collisionFlags.above = true;
+            player.vel.y = this.vel.y;
+        }
 
         // check block left, player right
         if ((playerRight + moveAmount.x > left && playerLeft < left) &&
@@ -56,5 +64,7 @@ export default class Block extends MovingObject {
         // draw block
         ctx.fillStyle = 'green';
         ctx.fillRect(pos.x - size.x / 2, GAME_HEIGHT - pos.y - size.y, size.x, size.y);
+        ctx.strokeStyle = 'red';
+        ctx.strokeRect(pos.x - size.x / 2, GAME_HEIGHT - pos.y - size.y, size.x, size.y);
     }
 }

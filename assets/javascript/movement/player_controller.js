@@ -75,6 +75,12 @@ export default class PlayerController {
             this.jumps = 2;
             this.rolling = false;
         }
+
+        if (this.pos.x - PLAYER_WIDTH / 2 <= 0) {
+            this.pos.x = PLAYER_WIDTH / 2;
+        } else if (this.pos.x + PLAYER_WIDTH / 2 >= GAME_WIDTH) {
+            this.pos.x = GAME_WIDTH - PLAYER_WIDTH / 2;
+        }
     }
 
     isRising() {

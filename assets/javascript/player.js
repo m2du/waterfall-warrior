@@ -61,7 +61,6 @@ export default class Player extends MovingObject {
     }
 
     updateAnimation(deltaTime, dirX) {
-        console.log(this.currentState.name);
         this.facing = (dirX != 0) ? dirX : this.facing;
 
         switch (this.currentState.name) {

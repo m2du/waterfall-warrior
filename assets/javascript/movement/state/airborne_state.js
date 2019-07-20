@@ -6,14 +6,13 @@ export default class AirborneState {
     }
 
     handleInput(controller, inputFlags) {
-        if (controller.grounded) {
+        if (controller.collisionFlags.below) {
             if (inputFlags.dirX !== 0) {
                 return PlayerState.WALKING;
             }
             return PlayerState.IDLE;
         }
 
-        // console.log(inputFlags);
         if ((inputFlags.jumpPressed && inputFlags.newJump && controller.jumps > 0) || controller.isRolling()) {
             return PlayerState.ROLLING;
         }

@@ -1,4 +1,5 @@
 import Game from './game';
+import Vector2 from './util/vector2';
 
 export default class MovingObject {
     constructor(options) {
@@ -16,13 +17,13 @@ export default class MovingObject {
         // default
     }
 
-    isCollideWith(other) {
+    willCollideWith(other, moveAmount) {
         // default
     }
     
     move(deltaTime) {
-        const offsetX = this.vel.x * deltaTime;
-        const offsetY = this.vel.y * deltaTime;
+        const offset = new Vector2(this.vel.x * deltaTime, this.vel.y * deltaTime);
+        this.pos.add(offset);
 
         if (this.game.isOffScreen(this.pos.y, this.size.y)) {
             this.remove();

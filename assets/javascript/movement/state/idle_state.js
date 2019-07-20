@@ -11,6 +11,6 @@ export default class IdleState extends GroundState {
     }
 
     handleUpdate(controller, inputFlags) {
-        controller.idle();
+        controller.idle(inputFlags);
     }
 }

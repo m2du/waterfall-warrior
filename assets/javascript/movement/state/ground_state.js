@@ -9,7 +9,6 @@ class GroundState {
         // }
 
         if (inputFlags.jumpPressed) {
-            inputFlags.jumpPressed = false;
             return PlayerState.JUMPING;
         }
 

@@ -34,7 +34,7 @@ export default class InputManager {
         }
 
         if (e.code === 'Space') {
-            inputFlags.newJump = inputFlags.newJump !== inputFlags.jumpPressed;
+            inputFlags.newJump = !inputFlags.jumpPressed;
             inputFlags.jumpPressed = true;
         }
     }
@@ -55,7 +55,7 @@ export default class InputManager {
         }
 
         if (e.code === 'Space') {
-            inputFlags.jumpHeld = false;
+            inputFlags.jumpPressed = false;
             inputFlags.newJump = true;
         }
     }

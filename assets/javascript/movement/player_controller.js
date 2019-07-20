@@ -23,18 +23,29 @@ export default class PlayerController {
         this.gravity = gravity;
         this.jumps = 2;
         this.rolling = false;
+
+
+        this.collisionFlags = {
+            above: false,
+            below: false,
+            left: false,
+            right: false
+        };
     }
 
-    idle() {
+    idle(inputFlags) {
+        this.inputFlags = inputFlags;
         this.vel.x = 0;
     }
 
     walk(inputFlags) {
+        this.inputFlags = inputFlags;
         this.vel.x = inputFlags.dirX * this.walkSpeed;
     }
 
     jump(inputFlags) {
-        inputFlags.jumpPressed = false;
+        this.inputFlags = inputFlags;
+        inputFlags.newJump = false;
 
         if (this.jumps > 0) {
             if (this.jumps === 1) {
@@ -42,12 +53,12 @@ export default class PlayerController {
             }
 
             this.jumps--;
-            this.grounded = false;
             this.vel.y = this.jumpVel;
         }
     }
 
     airborne(inputFlags) {
+        this.inputFlags = inputFlags;
         this.vel.x = inputFlags.dirX * this.walkSpeed;
     }
 
@@ -62,18 +73,16 @@ export default class PlayerController {
         const moveAmount = new Vector2(this.vel.x * deltaTime, this.vel.y * deltaTime);
 
         // check collisions
-        // TODO
+        this._resetCollisionFlags();
+        this.player.game.checkCollisions(moveAmount);
 
         // apply movement
         this.pos.add(moveAmount);
 
         // reset vertical velocity if grounded
         if (this.pos.y <= 0) {
-            this.grounded = true;
             this.pos.y = 0;
             this.vel.y = 0;
-            this.jumps = 2;
-            this.rolling = false;
         }
 
         if (this.pos.x - PLAYER_WIDTH / 2 <= 0) {
@@ -81,6 +90,24 @@ export default class PlayerController {
         } else if (this.pos.x + PLAYER_WIDTH / 2 >= GAME_WIDTH) {
             this.pos.x = GAME_WIDTH - PLAYER_WIDTH / 2;
         }
+
+        if (this.collisionFlags.above || this.collisionFlags.below) {
+            if (this.inputFlags.jumpPressed && this.inputFlags.newJump) {
+                // jumping this frame, do nothing
+            } else {
+                this.vel.y = 0;
+            }
+        }
+
+
+        if (this.collisionFlags.below) {
+            this.rolling = false;
+            this.jumps = 2;
+        }
+    }
+
+    isGrounded() {
+        this.collisionFlags.below;
     }
 
     isRising() {
@@ -93,6 +120,13 @@ export default class PlayerController {
         }
 
         return this.rolling;
+    }
+
+    _resetCollisionFlags() {
+        this.collisionFlags.above = false;
+        this.collisionFlags.below = false;
+        this.collisionFlags.left = false;
+        this.collisionFlags.right = false;
     }
 }
 

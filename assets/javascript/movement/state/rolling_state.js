@@ -7,11 +7,10 @@ export default class RollingState extends AirborneState {
     }
 
     handleUpdate(controller, inputFlags) {
-        if (inputFlags.jumpPressed) {
+        if (controller.jumps > 0) {
             controller.jump(inputFlags);
         } else {
             controller.airborne(inputFlags);
         }
-        inputFlags.jumpPressed = false;
     }
 }

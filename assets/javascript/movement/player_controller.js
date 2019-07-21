@@ -60,13 +60,19 @@ export default class PlayerController {
     wallAction(inputFlags, action) {
         this.inputFlags = inputFlags;
         this.wallsliding = true;
-
+        this.rolling = false;
+        console.log(action);
         switch(action) {
-            case "CLIMB":
-                break;
             case "LEAP":
+                this.vel.x = inputFlags.dirX * this.walkSpeed;
+                this.vel.y = WALL_LEAP_VEL;
+                this.inputFlags.newJump = false;
+                this.jumps++;
                 break;
             case "DROP":
+                this.vel.x = -this.wallDirection() * WALL_DROP_SPEED;
+                this.inputFlags.newJump = false;
+                this.jumps++;
                 break;
         }
     }
@@ -109,8 +115,10 @@ export default class PlayerController {
         if (this.isGrounded()) {
             this.jumps = 2;
             this.rolling = false;
-            this.wallsliding = false;
         }
+
+        // reset flags
+        this.wallsliding = false;
     }
 
     wallDirection() {
@@ -153,3 +161,5 @@ export default class PlayerController {
 
 const MAX_FALL_SPEED = -400;
 const WALLSLIDE_MAX_SPEED = -75;
+const WALL_LEAP_VEL = 500;
+const WALL_DROP_SPEED = 50;

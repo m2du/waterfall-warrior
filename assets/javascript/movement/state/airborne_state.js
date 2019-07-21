@@ -13,11 +13,12 @@ export default class AirborneState {
             return PlayerState.IDLE;
         }
 
-        if (controller.wallDirection() !== 0 && !controller.isRising()) {
+        if (controller.wallDirection() !== 0) {
             return PlayerState.WALLSLIDING;
         }
 
         if ((inputFlags.jumpPressed && inputFlags.newJump && controller.jumps > 0) || controller.isRolling()) {
+            debugger;
             return PlayerState.ROLLING;
         }
 

@@ -23,9 +23,7 @@ export default class WallslidingState {
 
         if (jump && inputFlags.dirX === -controller.wallDirection()) {
             action = WallSlideAction.Leap;
-        } else if (jump && inputFlags.dirX === controller.wallDirection()) {
-            action = WallSlideAction.Climb;
-        } else if (jump) {
+        } else if (jump && inputFlags.dirX === 0) {
             action = WallSlideAction.Drop;
         }
 
@@ -36,6 +34,5 @@ export default class WallslidingState {
 const WallSlideAction = {
     Leap: "LEAP",
     Drop: "DROP",
-    Climb: "CLIMB",
     None: "NONE"
 };

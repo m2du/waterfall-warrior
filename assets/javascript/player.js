@@ -19,7 +19,7 @@ import AnimationManager from './util/animation_manager';
 export default class Player extends MovingObject {
     constructor(options) {
         super(options);
-        this.pos = new Vector2(GAME_WIDTH / 2, 100);
+        this.pos = new Vector2(GAME_WIDTH / 2, 75);
         this.vel = new Vector2(0, 0);
 
         this.initMovementAndState();
@@ -58,6 +58,11 @@ export default class Player extends MovingObject {
 
         // update animation
         this.updateAnimation(inputFlags.dirX);
+
+        // check game over
+        if (this.game.isOffScreen(this.pos.y, this.size.y) || this.controller.gotSquished()) {
+            this.remove();
+        }
     }
 
     updateAnimation(dirX) {
@@ -92,7 +97,7 @@ export default class Player extends MovingObject {
     initMovementAndState() {
         this.inputManager = new InputManager(this);
         this.controller = new PlayerController(this);
-        this.currentState = PlayerState.IDLE;
+        this.currentState = PlayerState.FALLING;
         this.facing = 1;
     }
 

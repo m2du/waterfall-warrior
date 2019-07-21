@@ -184,6 +184,10 @@ export default class PlayerController {
         this.player.size.y = PLAYER_HEIGHT;
     }
 
+    gotSquished() {
+        return this.collisionFlags.above && this.collisionFlags.below;
+    }
+
     _resetCollisionFlags() {
         this.collisionFlags.above = false;
         this.collisionFlags.below = false;

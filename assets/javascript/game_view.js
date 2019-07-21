@@ -14,6 +14,9 @@ export default class GameView {
         this.frame = 0;
 
         this.animate = this.animate.bind(this);
+
+        // get height display
+        this.heightDisplay = document.getElementById('height-value');
     }
 
     start() {
@@ -31,6 +34,9 @@ export default class GameView {
         this.drawBg(deltaTime);
         this.game.draw(this.ctx);
         this.lastTime = time;
+
+        // update height value in UI
+        this.heightDisplay.innerHTML = Math.floor(this.game.topHeight / 30);
 
         requestAnimationFrame(this.animate);
     }
@@ -54,9 +60,5 @@ export default class GameView {
         // img, sourceX, sourceY, sourceH, sourceW, canvasX, canvasY, width, height
         ctx.drawImage(this.waterbar, 620 * this.frame, 0, 620, 900,
             -10, 0, 720, 850);
-    }
-
-    bindKeyHandlers() {
-        // map player input to game logic
     }
 }

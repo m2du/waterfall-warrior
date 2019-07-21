@@ -15,38 +15,7 @@ const BLOCK_UNIT = Block.BLOCK_UNIT;
 
 export default class Game {
     constructor() {
-        // create player
-        this.player = new Player({
-            game: this,
-            size: new Vector2(PLAYER_WIDTH, PLAYER_HEIGHT)
-        });
-
-        // create floor
-        const floor = new Block({
-            game: this,
-            pos: new Vector2(GAME_WIDTH / 2, 0),
-            size: new Vector2(GAME_WIDTH, 50),
-            vel: new Vector2(0, 0)
-        });
-
-        this.blocks = [floor];
-        this.lastBlockTime = 0;
-        this.blocksPerSecond = 1;
-
-        // create wall - for testing wallslide
-        // const wall = new Block({
-        //     game: this,
-        //     pos: new Vector2(25, 0),
-        //     size: new Vector2(50, GAME_HEIGHT),
-        //     vel: new Vector2(0, 0)
-        // });
-        // this.blocks.push(wall);
-
-        // set start scroll height
-        this.scrollHeight = Game.BASE_SCROLL_HEIGHT;
-
-        // set start height
-        this.topHeight = 0;
+        this._init();
     }
 
     checkCollisions(moveAmount) {
@@ -82,8 +51,8 @@ export default class Game {
 
         this.blocksPerSecond = (this.scrollHeight + 1200) / 1000
 
-        if (this.topHeight < this.player.pos.y) {
-            this.topHeight = this.player.pos.y;
+        if (this.topHeight < this.player.pos.y - 50) {
+            this.topHeight = this.player.pos.y - 50;
         }
     }
 
@@ -123,6 +92,33 @@ export default class Game {
 
     end() {
         // TODO
+        this._init();
+    }
+
+    _init() {
+        // create player
+        this.player = new Player({
+            game: this,
+            size: new Vector2(PLAYER_WIDTH, PLAYER_HEIGHT)
+        });
+
+        // create floor
+        const floor = new Block({
+            game: this,
+            pos: new Vector2(GAME_WIDTH / 2, 0),
+            size: new Vector2(GAME_WIDTH, 50),
+            vel: new Vector2(0, 0)
+        });
+
+        this.blocks = [floor];
+        this.lastBlockTime = 0;
+        this.blocksPerSecond = 1;
+
+        // set start scroll height
+        this.scrollHeight = Game.BASE_SCROLL_HEIGHT;
+
+        // set start height
+        this.topHeight = 0;
     }
 }
 

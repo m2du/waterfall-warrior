@@ -8,6 +8,11 @@ import {
 import Vector2 from './util/vector2';
 import MovingObject from './moving_object';
 
+const TILESET = new Image();
+TILESET.src = '../assets/images/tileset.png'
+const TILE_SIZE = 16;
+const EXTRA = 5;
+
 export default class Block extends MovingObject {
     constructor(options) {
         super(options);
@@ -36,7 +41,7 @@ export default class Block extends MovingObject {
         }
 
         // check block bottom, player top
-        if ((playerTop + moveAmount.y > bottom && playerBottom < top) &&
+        else if ((playerTop + moveAmount.y > bottom && playerBottom < top) &&
             ((playerLeft > left && playerLeft < right) ||
                 (playerRight < right && playerRight > left))) {
             moveAmount.y = bottom - playerTop;
@@ -45,7 +50,7 @@ export default class Block extends MovingObject {
         }
 
         // check block left, player right
-        if ((playerRight + moveAmount.x > left && playerLeft < left) &&
+        else if ((playerRight + moveAmount.x > left && playerLeft < left) &&
             ((playerBottom >= bottom && playerBottom <= top) ||
                 (playerTop <= top && playerTop >= bottom))) {
             moveAmount.x = left - playerRight;
@@ -54,7 +59,7 @@ export default class Block extends MovingObject {
         }
 
         // check block right, player left
-        if ((playerLeft + moveAmount.x < right && playerRight > right) &&
+        else if ((playerLeft + moveAmount.x < right && playerRight > right) &&
             ((playerBottom >= bottom && playerBottom <= top) ||
                 (playerTop <= top && playerTop >= bottom))) {
             moveAmount.x = right - playerLeft;
@@ -63,14 +68,82 @@ export default class Block extends MovingObject {
         }
     }
 
+    // drawImage(img, sourceX, sourceY, sourceH, sourceW, canvasX, canvasY, width, height)
     draw(ctx) {
-        const pos = this.pos;
         const size = this.size;
+        const drawPos = new Vector2(this.pos.x - size.x / 2, GAME_HEIGHT - this.pos.y - size.y);
+        const drawSize = Block.BLOCK_UNIT;
+
+        const maxRow = size.y / Block.BLOCK_UNIT;
+        const maxCol = size.x / Block.BLOCK_UNIT;
 
         // draw block
-        ctx.fillStyle = 'green';
-        ctx.fillRect(pos.x - size.x / 2, GAME_HEIGHT - pos.y - size.y, size.x, size.y);
+        for (let i=0; i < maxRow; i++) {
+            for (let j=0; j < maxCol; j++) {
+                const drawOffsetX = drawSize * j;
+                const drawOffsetY = drawSize * i;
+
+                switch (i) {
+                    case 0: // draw top
+                        switch (j) {
+                            case 0: // top left corner
+                                ctx.drawImage(TILESET, 0, 0, TILE_SIZE, TILE_SIZE,
+                                    drawPos.x - EXTRA, drawPos.y - EXTRA, drawSize + EXTRA * 2, drawSize + EXTRA * 2);
+                                break;
+                            case maxCol - 1: // top right corner
+                                ctx.drawImage(TILESET, 32, 0, TILE_SIZE, TILE_SIZE,
+                                    drawPos.x - EXTRA + drawOffsetX, drawPos.y - EXTRA, drawSize + EXTRA * 2, drawSize + EXTRA * 2);
+                                break;
+                            default: // top middle tiles
+                                ctx.drawImage(TILESET, 16, 0, TILE_SIZE, TILE_SIZE,
+                                    drawPos.x - EXTRA + drawOffsetX, drawPos.y - EXTRA, drawSize + EXTRA * 2, drawSize + EXTRA * 2);
+                        }
+                        break;
+                    case maxRow - 1: // draw bottom
+                        switch (j) {
+                            case 0: // bottom left corner
+                                ctx.drawImage(TILESET, 0, 32, TILE_SIZE, TILE_SIZE,
+                                    drawPos.x - EXTRA, drawPos.y - EXTRA + drawOffsetY, drawSize + EXTRA * 2, drawSize + EXTRA * 2);
+                                break;
+                            case maxCol - 1: // bottom right corner
+                                ctx.drawImage(TILESET, 32, 32, TILE_SIZE, TILE_SIZE,
+                                    drawPos.x - EXTRA + drawOffsetX, drawPos.y - EXTRA + drawOffsetY, drawSize + EXTRA * 2, drawSize + EXTRA * 2);
+                                break;
+                            default: // bottom middle tiles
+                                ctx.drawImage(TILESET, 16, 32, TILE_SIZE, TILE_SIZE,
+                                    drawPos.x - EXTRA + drawOffsetX, drawPos.y - EXTRA + drawOffsetY, drawSize + EXTRA * 2, drawSize + EXTRA * 2);
+                        }
+                        break;
+                    default: // everything else
+                        switch (j) {
+                            case 0: // bottom left corner
+                                ctx.drawImage(TILESET, 0, 16, TILE_SIZE, TILE_SIZE,
+                                    drawPos.x - EXTRA, drawPos.y - EXTRA + drawOffsetY, drawSize + EXTRA * 2, drawSize + EXTRA * 2);
+                                break;
+                            case maxCol - 1: // bottom right corner
+                                ctx.drawImage(TILESET, 32, 16, TILE_SIZE, TILE_SIZE,
+                                    drawPos.x - EXTRA + drawOffsetX, drawPos.y - EXTRA + drawOffsetY, drawSize + EXTRA * 2, drawSize + EXTRA * 2);
+                                break;
+                            default: // bottom middle tiles
+                                ctx.drawImage(TILESET, 16, 16, TILE_SIZE, TILE_SIZE,
+                                    drawPos.x - EXTRA + drawOffsetX, drawPos.y - EXTRA + drawOffsetY, drawSize + EXTRA * 2, drawSize + EXTRA * 2);
+                        }
+                }
+            }
+        }
+
+        // draw hitbox
         ctx.strokeStyle = 'red';
-        ctx.strokeRect(pos.x - size.x / 2, GAME_HEIGHT - pos.y - size.y, size.x, size.y);
+        ctx.strokeRect(drawPos.x, drawPos.y, size.x, size.y);
     }
 }
+
+Block.BLOCK_UNIT = 25;
+Block.BLOCK_SIZES = [
+    new Vector2(2, 4).scale(Block.BLOCK_UNIT),
+    new Vector2(4, 4).scale(Block.BLOCK_UNIT),
+    new Vector2(6, 4).scale(Block.BLOCK_UNIT),
+    new Vector2(4, 8).scale(Block.BLOCK_UNIT),
+    new Vector2(6, 6).scale(Block.BLOCK_UNIT),
+    new Vector2(8, 4).scale(Block.BLOCK_UNIT)
+];

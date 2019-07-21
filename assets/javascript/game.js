@@ -10,15 +10,8 @@ import Vector2 from './util/vector2';
 import Player from './player';
 import Block from './block';
 
-const BLOCK_UNIT = 50;
-const BLOCK_SIZES = [
-    new Vector2(1, 2).scale(BLOCK_UNIT),
-    new Vector2(2, 2).scale(BLOCK_UNIT),
-    new Vector2(3, 2).scale(BLOCK_UNIT),
-    new Vector2(2, 4).scale(BLOCK_UNIT),
-    new Vector2(3, 3).scale(BLOCK_UNIT),
-    new Vector2(4, 2).scale(BLOCK_UNIT)
-];
+const BLOCK_SIZES = Block.BLOCK_SIZES;
+const BLOCK_UNIT = Block.BLOCK_UNIT;
 
 export default class Game {
     constructor() {
@@ -32,7 +25,7 @@ export default class Game {
         const floor = new Block({
             game: this,
             pos: new Vector2(GAME_WIDTH / 2, 0),
-            size: new Vector2(GAME_WIDTH, 64),
+            size: new Vector2(GAME_WIDTH, 50),
             vel: new Vector2(0, 0)
         });
 
@@ -43,7 +36,7 @@ export default class Game {
         // create wall - for testing wallslide
         const wall = new Block({
             game: this,
-            pos: new Vector2(0, 0),
+            pos: new Vector2(25, 0),
             size: new Vector2(50, GAME_HEIGHT),
             vel: new Vector2(0, 0)
         });
@@ -55,8 +48,8 @@ export default class Game {
     }
 
     draw(ctx) {
-        this.blocks.forEach(block => block.draw(ctx));
         this.player.draw(ctx);
+        this.blocks.forEach(block => block.draw(ctx));
     }
 
     step() {

@@ -14,9 +14,6 @@ export default class GameView {
         this.frame = 0;
 
         this.animate = this.animate.bind(this);
-
-        // get height display
-        this.heightDisplay = document.getElementById('height-value');
     }
 
     start() {
@@ -34,9 +31,6 @@ export default class GameView {
         this.drawBg(deltaTime);
         this.game.draw(this.ctx);
         this.lastTime = time;
-
-        // update height value in UI
-        this.heightDisplay.innerHTML = Math.floor(this.game.topHeight / 30);
 
         requestAnimationFrame(this.animate);
     }

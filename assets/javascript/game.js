@@ -15,6 +15,12 @@ const BLOCK_UNIT = Block.BLOCK_UNIT;
 
 export default class Game {
     constructor() {
+        // get height display
+        this.heightDisplay = document.getElementById('height-value');
+
+        // get start prompt
+        this.startPrompt = document.getElementById('start-prompt');
+
         this._init();
     }
 
@@ -36,12 +42,20 @@ export default class Game {
         if (this.scrollHeight < this.player.pos.y) {
             this.scrollHeight = Math.round(lerp(this.player.pos.y, this.scrollHeight, 500));
         }
+
+        // update height value in UI
+        this.heightDisplay.innerHTML = Math.floor(this.topHeight / 30);
     }
 
     step() {
+        if (!this.started && this.player.inputManager.inputFlags.jumpPressed) {
+            this.startPrompt.style.visibility = 'hidden';
+            this.started = true;
+        }
+
         if (this.lastBlockTime < 1 / this.blocksPerSecond) {
             this.lastBlockTime += Time.deltaTime;
-        } else {
+        } else if (this.started) {
             this._generateBlock();
             this.lastBlockTime = 0;
         }
@@ -119,6 +133,9 @@ export default class Game {
 
         // set start height
         this.topHeight = 0;
+
+        this.startPrompt.style.visibility = 'visible';
+        this.started = false;
     }
 }
 

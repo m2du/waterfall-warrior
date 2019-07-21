@@ -51,6 +51,33 @@ canvas {
     box-sizing: border-box;
 }
 
+#start-prompt {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'Chonky', 'Squada One', sans-serif;
+    font-size: 2.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-animation: text-pulse 1.5s ease;
+    -webkit-animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes text-pulse {
+    0% {
+        font-size: 2.25rem;
+    }
+    50% {
+        font-size: 2.35rem;
+    }
+    100% {
+        font-size: 2.25rem;
+    }
+}
+
 #canvas-border {
     padding: 3px;
     background: linear-gradient(to top, #001d0a, #174928);

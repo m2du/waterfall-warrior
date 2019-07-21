@@ -12,7 +12,7 @@ import Block from './block';
 
 const BLOCK_SIZES = Block.BLOCK_SIZES;
 const BLOCK_UNIT = Block.BLOCK_UNIT;
-const MAX_SCORES = 20;
+const MAX_SCORES = 10;
 
 export default class Game {
     constructor() {
@@ -53,7 +53,7 @@ export default class Game {
         ctx.restore();
 
         if (this.scrollHeight < this.player.pos.y) {
-            this.scrollHeight = Math.round(lerp(this.player.pos.y, this.scrollHeight, 50));
+            this.scrollHeight = Math.round(lerp(this.player.pos.y, this.scrollHeight, 100));
         }
 
         // update height value in UI
@@ -113,7 +113,7 @@ export default class Game {
     }
 
     isOffScreen(pos, size) {
-        return pos + size + 15 < this.scrollHeight - Game.BASE_SCROLL_HEIGHT;
+        return pos + size + 30 < this.scrollHeight - Game.BASE_SCROLL_HEIGHT;
     }
 
     remove(obj) {
@@ -126,7 +126,8 @@ export default class Game {
         this.gameover = true;
 
         // set height score
-        this.endHeightUI.innerHTML = `${this.climbed}m x 1000 = ${this.climbed * 1000}`;
+        const heightScore = this.climbed * 100;
+        this.endHeightUI.innerHTML = `${this.climbed}m x 1000 = ${heightScore}`;
         
         // set time bonus
         const duration = new Date() - this.startTime;
@@ -135,7 +136,7 @@ export default class Game {
         this.timeBonusUI.innerHTML = Math.round(timeBonus);
         
         // set final score
-        const finalScore = Math.round(this.climbed * 1000 + timeBonus);
+        const finalScore = Math.round(heightScore + timeBonus);
         this.finalScoreUI.innerHTML = finalScore;
 
         // display summary
@@ -158,8 +159,6 @@ export default class Game {
             this.highscores[MAX_SCORES - 1] = score;
             this._refreshHighScores();
         }
-
-        console.log(this.highscores);
     }
 
     _refreshHighScores() {

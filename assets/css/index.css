@@ -7,19 +7,19 @@
 body {
     background: #3e2723;
     color: white;
+    overflow-x: hidden;
 }
 
 #game-title {
     font-family: 'Permanent Marker', sans-serif;
-    font-size: 50px;
-    line-height: 50px;
+    font-size: 3.25rem;
     padding: 20px;
 }
 
 main {
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     flex: 1 1 auto;
 }
 
@@ -62,6 +62,8 @@ canvas {
 }
 
 .pulse {
+    animation: text-pulse 1.5s ease;
+    animation-iteration-count: infinite;
     -webkit-animation: text-pulse 1.5s ease;
     -webkit-animation-iteration-count: infinite;
 }
@@ -77,6 +79,18 @@ canvas {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+@keyframes text-pulse {
+    0% {
+        font-size: 2.25rem;
+    }
+    50% {
+        font-size: 2.35rem;
+    }
+    100% {
+        font-size: 2.25rem;
+    }
 }
 
 @-webkit-keyframes text-pulse {
@@ -108,8 +122,22 @@ canvas {
 #end-text {
     font-size: 3.5rem;
     margin-bottom: 1rem;
+    animation: text-flash .5s ease;
+    animation-iteration-count: infinite;
     -webkit-animation: text-flash .5s ease;
     -webkit-animation-iteration-count: infinite;
+}
+
+@keyframes text-flash {
+    0% {
+        color: white;
+    }
+    50% {
+        color: rgb(255, 55, 55);
+    }
+    100% {
+        color: white;
+    }
 }
 
 @-webkit-keyframes text-flash {
@@ -155,13 +183,47 @@ aside {
     font-family: 'Squada One', sans-serif;
     padding-top: 50px;
     flex: 1 1 auto;
+    width: 300px;
 }
 
 aside header {
+    width: 100%;
     font-weight: 600;
     font-size: 3rem;
     line-height: 3rem;
     padding: 12px;
+    text-align: center;
+}
+
+#blurb {
+    font-size: 2rem;
+    font-family: 'Permanent Marker';
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+#instruction-list {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1rem 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-size: 1.5rem;
+}
+
+#instruction-list li {
+    margin-bottom: 1rem;
+}
+
+#wallslide-header {
+    width: 100%;
+    text-align: center;
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+    font-size: 2rem;
 }
 
 #highscore-list {
@@ -170,4 +232,9 @@ aside header {
     justify-content: flex-start;
     align-items: center;
     font-size: 2rem;
+    margin-top: 1rem;
+}
+
+#highscore-list li {
+    margin-bottom: 1rem;
 }

@@ -147,3 +147,6 @@ Block.BLOCK_SIZES = [
     new Vector2(6, 6).scale(Block.BLOCK_UNIT),
     new Vector2(8, 4).scale(Block.BLOCK_UNIT)
 ];
+Block.BLOCK_SPEEDS = [
+    50, 75, 100, 125, 150
+]

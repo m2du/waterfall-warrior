@@ -10,8 +10,11 @@ import Vector2 from './util/vector2';
 import Player from './player';
 import Block from './block';
 
+import SoundManager from './util/sound_manager';
+
 const BLOCK_SIZES = Block.BLOCK_SIZES;
 const BLOCK_UNIT = Block.BLOCK_UNIT;
+const BLOCK_SPEEDS = Block.BLOCK_SPEEDS;
 const MAX_SCORES = 10;
 
 export default class Game {
@@ -27,6 +30,9 @@ export default class Game {
         this.endHeightUI = document.getElementById('end-height');
         this.timeBonusUI = document.getElementById('time-bonus');
         this.finalScoreUI = document.getElementById('final-score');
+
+        // set up audio
+        this._audioSetup();
 
         // get highscore display
         this.scoreList = document.getElementById('highscore-list');
@@ -80,7 +86,7 @@ export default class Game {
 
         this.blocks.forEach(block => block.move());
 
-        this.blocksPerSecond = (this.scrollHeight + 1200) / 1000
+        // this.blocksPerSecond = (this.scrollHeight + 1200) / 1000
 
         if (this.topHeight < this.player.pos.y - 50) {
             this.topHeight = this.player.pos.y - 50;
@@ -106,7 +112,7 @@ export default class Game {
         );
 
         const vel = new Vector2(
-            0, -Math.floor(Math.random() * 150 + 50)
+            0, - BLOCK_SPEEDS[Math.floor(Math.random() * BLOCK_SPEEDS.length)]
         );
 
         this.blocks.push(new Block({ game: this, size, pos, vel }));
@@ -123,6 +129,7 @@ export default class Game {
     }
 
     end() {
+        this.hitSFX();
         this.gameover = true;
 
         // set height score
@@ -198,7 +205,7 @@ export default class Game {
 
         this.blocks = [floor];
         this.lastBlockTime = 0;
-        this.blocksPerSecond = 1;
+        this.blocksPerSecond = 1.5;
 
         // set start scroll height
         this.scrollHeight = Game.BASE_SCROLL_HEIGHT;
@@ -210,6 +217,25 @@ export default class Game {
         this.startPrompt.style.visibility = 'visible';
         this.started = false;
         this.gameover = false;
+    }
+
+    _audioSetup() {
+        SoundManager.waterfallBGM.ontimeupdate = function() {
+            const buffer = .44;
+            if (this.currentTime > this.duration - buffer) {
+                this.currentTime = 0;
+                this.play();
+            }
+        };
+        SoundManager.waterfallBGM.play();
+    }
+
+    jumpSFX() {
+        SoundManager.jumpSFX.play();
+    }
+
+    hitSFX() {
+        SoundManager.hitSFX.play();
     }
 }
 

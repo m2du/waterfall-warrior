@@ -6,7 +6,6 @@ import {
     PLAYER_WIDTH,
     PLAYER_HEIGHT
 } from './constants';
-import { Time } from './util/util';
 import Vector2 from './util/vector2';
 import MovingObject from "./moving_object";
 
@@ -15,6 +14,7 @@ import PlayerController from './movement/player_controller';
 import InputManager from './movement/input_manager';
 
 import AnimationManager from './util/animation_manager';
+import SoundManager from './util/sound_manager';
 
 export default class Player extends MovingObject {
     constructor(options) {
@@ -50,6 +50,10 @@ export default class Player extends MovingObject {
         const inputFlags = this.inputManager.inputFlags;
         this.currentState = this.currentState.handleInput(this.controller, inputFlags);
 
+        if (this.currentState.name === 'JUMPING') {
+            SoundManager.jumpSFX.play();
+        }
+
         // process state with current inputs
         this.currentState.handleUpdate(this.controller, inputFlags);
 
@@ -61,7 +65,7 @@ export default class Player extends MovingObject {
 
         // check game over
         if (this.game.isOffScreen(this.pos.y, this.size.y) || this.controller.gotSquished()) {
-            this.remove();
+            this.dead();
         }
     }
 
@@ -90,7 +94,7 @@ export default class Player extends MovingObject {
         }
     }
 
-    remove() {
+    dead() {
         this.game.end();
     }
 

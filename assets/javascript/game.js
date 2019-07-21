@@ -10,6 +10,16 @@ import Vector2 from './util/vector2';
 import Player from './player';
 import Block from './block';
 
+const BLOCK_UNIT = 50;
+const BLOCK_SIZES = [
+    new Vector2(1, 2).scale(BLOCK_UNIT),
+    new Vector2(2, 2).scale(BLOCK_UNIT),
+    new Vector2(3, 2).scale(BLOCK_UNIT),
+    new Vector2(2, 4).scale(BLOCK_UNIT),
+    new Vector2(3, 3).scale(BLOCK_UNIT),
+    new Vector2(4, 2).scale(BLOCK_UNIT)
+];
+
 export default class Game {
     constructor() {
         // create player
@@ -28,7 +38,7 @@ export default class Game {
 
         this.blocks = [floor];
         this.lastBlockTime = 0;
-        this.blocksPerSecond = 1.5;
+        this.blocksPerSecond = 1;
 
         // create wall - for testing wallslide
         const wall = new Block({
@@ -62,18 +72,18 @@ export default class Game {
     }
 
     _generateBlock() {
-        const unit = 50;
-        const size = new Vector2(
-            Math.floor(Math.random() * 5 + 1) * unit,
-            Math.floor(Math.random() * 3 + 1) * unit
-        );
+        const randomSize = Math.floor(Math.random() * BLOCK_SIZES.length);
+        const size = BLOCK_SIZES[randomSize];
+
+        const randomX = Math.floor(Math.random() * GAME_WIDTH / (BLOCK_UNIT)) * (BLOCK_UNIT) + size.x / 2
         const pos = new Vector2(
-            Math.floor(Math.random() * GAME_WIDTH / (unit * 2)) * (unit * 2) + size.x / 2,
-            GAME_HEIGHT + size.y
+            randomX, GAME_HEIGHT + size.y
         );
+
         const vel = new Vector2(
             0, -Math.floor(Math.random() * 50 + 100)
         );
+
         this.blocks.push(new Block({ game: this, size, pos, vel }));
     }
 

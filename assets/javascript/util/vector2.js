@@ -7,6 +7,13 @@ export default class Vector2 {
     add(vector) {
         this.x += vector.x;
         this.y += vector.y;
+        return this;
+    }
+
+    scale(scalar) {
+        this.x *= scalar;
+        this.y *= scalar;
+        return this;
     }
 
     magnitude() {

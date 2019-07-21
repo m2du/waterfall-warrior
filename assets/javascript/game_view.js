@@ -7,7 +7,7 @@ export default class GameView {
 
         // waterfall animation setup
         this.waterbar = new Image();
-        this.waterbar.src = '../assets/images/waterfall_sprite_sheet.png';
+        this.waterbar.src = './assets/images/waterfall_sprite_sheet.png';
         this.waterfallSpeed = .4;
         this.waterfallFrames = 6;
         this.lastFrameTime = 0;

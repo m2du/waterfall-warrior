@@ -127,12 +127,12 @@ export default class Game {
 
         // set height score
         const heightScore = this.climbed * 100;
-        this.endHeightUI.innerHTML = `${this.climbed}m x 1000 = ${heightScore}`;
+        this.endHeightUI.innerHTML = `${this.climbed}m x 100 = ${heightScore}`;
         
         // set time bonus
         const duration = new Date() - this.startTime;
         const benchmarkHeight = GAME_HEIGHT * (duration / 60000);
-        const timeBonus = (this.topHeight > benchmarkHeight) ? (this.topHeight - benchmarkHeight) * 10 : 0;
+        const timeBonus = (this.topHeight > benchmarkHeight) ? this.topHeight - benchmarkHeight : 0;
         this.timeBonusUI.innerHTML = Math.round(timeBonus);
         
         // set final score

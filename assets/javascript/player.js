@@ -103,9 +103,9 @@ export default class Player extends MovingObject {
 
     initDrawAndAnimation() {
         this.imageRight = new Image();
-        this.imageRight.src = '../assets/images/character_sheet_right.png';
+        this.imageRight.src = './assets/images/character_sheet_right.png';
         this.imageLeft = new Image();
-        this.imageLeft.src = '../assets/images/character_sheet_left.png';
+        this.imageLeft.src = './assets/images/character_sheet_left.png';
         this.animationManager = new AnimationManager();
         PlayerState.animator = this.animationManager;
     }

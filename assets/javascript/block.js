@@ -9,7 +9,7 @@ import Vector2 from './util/vector2';
 import MovingObject from './moving_object';
 
 const TILESET = new Image();
-TILESET.src = '../assets/images/tileset.png'
+TILESET.src = './assets/images/tileset.png'
 const TILE_SIZE = 16;
 const EXTRA = 5;
 

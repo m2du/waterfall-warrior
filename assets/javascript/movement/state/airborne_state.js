@@ -13,7 +13,8 @@ export default class AirborneState {
             return PlayerState.IDLE;
         }
 
-        if (controller.wallDirection() !== 0) {
+        const wallDirection = controller.wallDirection();
+        if (wallDirection !== 0 && inputFlags.dirX === wallDirection) {
             return PlayerState.WALLSLIDING;
         }
 

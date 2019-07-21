@@ -50,6 +50,7 @@ export default class Block extends MovingObject {
                 (playerTop <= top && playerTop >= bottom))) {
             moveAmount.x = left - playerRight;
             player.controller.collisionFlags.right = true;
+            player.controller.collisionFlags.minSlideSpeed = this.vel.y;
         }
 
         // check block right, player left
@@ -58,6 +59,7 @@ export default class Block extends MovingObject {
                 (playerTop <= top && playerTop >= bottom))) {
             moveAmount.x = right - playerLeft;
             player.controller.collisionFlags.left = true;
+            player.controller.collisionFlags.minSlideSpeed = this.vel.y;
         }
     }
 

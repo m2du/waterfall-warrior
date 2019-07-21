@@ -74,7 +74,7 @@ export default class Game {
         const vel = new Vector2(
             0, -Math.floor(Math.random() * 50 + 100)
         );
-        // this.blocks.push(new Block({ game: this, size, pos, vel }));
+        this.blocks.push(new Block({ game: this, size, pos, vel }));
     }
 
     isOffScreen(pos, size) {

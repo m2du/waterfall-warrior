@@ -20,10 +20,12 @@ export default class WallslidingState {
     handleUpdate(controller, inputFlags) {
         let action = WallSlideAction.None;
         let jump = inputFlags.jumpPressed && inputFlags.newJump;
-
+        
         if (jump && inputFlags.dirX === -controller.wallDirection()) {
             action = WallSlideAction.Leap;
-        } else if (jump && inputFlags.dirX === 0) {
+        } else if (jump && inputFlags.dirX === controller.wallDirection()) {
+            action = WallSlideAction.Climb;
+        } else if (jump) {
             action = WallSlideAction.Drop;
         }
 
@@ -32,6 +34,7 @@ export default class WallslidingState {
 }
 
 const WallSlideAction = {
+    Climb: "CLIMB",
     Leap: "LEAP",
     Drop: "DROP",
     None: "NONE"

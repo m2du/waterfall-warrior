@@ -4,8 +4,22 @@ import {
     PLAYER_WIDTH,
     PLAYER_HEIGHT
 } from '../constants';
-import { Time } from '../util/util';
+import { Time, lerp } from '../util/util';
 import Vector2 from '../util/vector2';
+
+const WALK_SPEED = GAME_WIDTH * 0.3;
+const JUMP_HEIGHT = PLAYER_HEIGHT * 2;
+const JUMP_DIST = PLAYER_WIDTH * 5;
+const JUMP_VEL = (2 * WALK_SPEED * JUMP_HEIGHT) / (JUMP_DIST / 2);
+const GRAVITY = (-2 * JUMP_HEIGHT * Math.pow(WALK_SPEED, 2)) / Math.pow(JUMP_DIST / 2, 2);
+
+const MAX_FALL_SPEED = -400;
+const WALLSLIDE_MAX_SPEED = -75;
+const WALL_CLIMB_VEL = new Vector2(WALK_SPEED * .4, JUMP_VEL * .8);
+const WALL_LEAP_VEL = new Vector2(WALK_SPEED * 1.5, JUMP_VEL);
+const WALL_DROP_VEL = new Vector2(WALK_SPEED, JUMP_HEIGHT * .25);
+const GROUND_SMOOTHING = 1200;
+const AIR_SMOOTHING = 800;
 
 export default class PlayerController {
     constructor(player) {
@@ -13,35 +27,30 @@ export default class PlayerController {
         this.pos = player.pos;
         this.vel = player.vel;
 
-        const walkSpeed = GAME_WIDTH * 0.3;
-        const jumpHeight = PLAYER_HEIGHT * 2;
-        const jumpDist = PLAYER_WIDTH * 5;
-        const jumpVel = (2 * walkSpeed * jumpHeight) / (jumpDist / 2);
-        const gravity = (-2 * jumpHeight * Math.pow(walkSpeed, 2)) / Math.pow(jumpDist / 2, 2);
-
-        this.walkSpeed = walkSpeed;
-        this.jumpVel = jumpVel;
-        this.gravity = gravity;
+        this.walkSpeed = WALK_SPEED;
+        this.jumpVel = JUMP_VEL;
+        this.gravity = GRAVITY;
         this.jumps = 2;
         this.rolling = false;
-
+        this.rollHeight = 0;
 
         this.collisionFlags = {
             above: false,
             below: false,
             left: false,
-            right: false
+            right: false,
+            minSlideSpeed: WALLSLIDE_MAX_SPEED
         };
     }
 
     idle(inputFlags) {
         this.inputFlags = inputFlags;
-        this.vel.x = 0;
+        this.vel.x = lerp(0, this.vel.x, GROUND_SMOOTHING);
     }
 
     walk(inputFlags) {
         this.inputFlags = inputFlags;
-        this.vel.x = inputFlags.dirX * this.walkSpeed;
+        this.vel.x = lerp(inputFlags.dirX * this.walkSpeed, this.vel.x, GROUND_SMOOTHING);
     }
 
     jump(inputFlags) {
@@ -51,10 +60,12 @@ export default class PlayerController {
         if (this.jumps > 0) {
             if (this.jumps === 1) {
                 this.rolling = true;
+                this.rollHeight = this.pos.y;
             }
 
             this.jumps--;
             this.vel.y = this.jumpVel;
+            this.vel.x = inputFlags.dirX * this.walkSpeed;
         }
     }
 
@@ -62,25 +73,34 @@ export default class PlayerController {
         this.inputFlags = inputFlags;
         this.wallsliding = true;
         this.rolling = false;
-        console.log(action);
+        
         switch(action) {
-            case "LEAP":
-                this.vel.x = inputFlags.dirX * this.walkSpeed;
-                this.vel.y = WALL_LEAP_VEL;
+            case "CLIMB":
+                this.wallsliding = false;
+                this.vel.x = -inputFlags.dirX * WALL_CLIMB_VEL.x;
+                this.vel.y = WALL_CLIMB_VEL.y;
                 this.inputFlags.newJump = false;
-                this.jumps++;
+                break;
+            case "LEAP":
+                this.wallsliding = false;
+                this.vel.x = inputFlags.dirX * WALL_LEAP_VEL.x;
+                this.vel.y = WALL_LEAP_VEL.y;
+                this.inputFlags.newJump = false;
+                this.jumps = 1;
                 break;
             case "DROP":
-                this.vel.x = -this.wallDirection() * WALL_DROP_SPEED;
+                this.wallsliding = false;
+                this.vel.x = -this.wallDirection() * WALL_DROP_VEL.x;
+                this.vel.y = WALL_DROP_VEL.y;
                 this.inputFlags.newJump = false;
-                this.jumps++;
+                this.jumps = 1;
                 break;
         }
     }
 
     airborne(inputFlags) {
         this.inputFlags = inputFlags;
-        this.vel.x = inputFlags.dirX * this.walkSpeed;
+        this.vel.x = lerp(inputFlags.dirX * this.walkSpeed, this.vel.x, AIR_SMOOTHING);
     }
 
     move() {
@@ -93,8 +113,15 @@ export default class PlayerController {
         }
 
         // check if wallsliding
-        if (this.wallsliding && this.vel.y < WALLSLIDE_MAX_SPEED) {
-            this.vel.y = WALLSLIDE_MAX_SPEED;
+        if (this.wallsliding) {
+            if (this.vel.y > this.collisionFlags.minSlideSpeed && this.collisionFlags.minSlideSpeed < 0) {
+                this.vel.y = lerp(this.collisionFlags.minSlideSpeed, this.vel.y, 1250);
+            }
+
+            const slideSpeedMax = WALLSLIDE_MAX_SPEED + this.collisionFlags.minSlideSpeed;
+            if (this.vel.y < slideSpeedMax) {
+                this.vel.y = slideSpeedMax;
+            }
         }
 
         // calc movement vector
@@ -112,6 +139,10 @@ export default class PlayerController {
             this.pos.x = PLAYER_WIDTH / 2;
         } else if (this.pos.x + PLAYER_WIDTH / 2 >= GAME_WIDTH) {
             this.pos.x = GAME_WIDTH - PLAYER_WIDTH / 2;
+        }
+
+        if (this.pos.y < this.rollHeight) {
+            this.rolling = false;
         }
 
         if (this.isGrounded()) {
@@ -160,8 +191,3 @@ export default class PlayerController {
         this.collisionFlags.right = false;
     }
 }
-
-const MAX_FALL_SPEED = -400;
-const WALLSLIDE_MAX_SPEED = -75;
-const WALL_LEAP_VEL = 500;
-const WALL_DROP_SPEED = 50;

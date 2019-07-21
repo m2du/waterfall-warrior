@@ -4,7 +4,7 @@ import {
     PLAYER_WIDTH,
     PLAYER_HEIGHT
 } from './constants';
-import { Time } from './util/util';
+import { Time, lerp } from './util/util';
 import Vector2 from './util/vector2';
 
 import Player from './player';
@@ -34,13 +34,19 @@ export default class Game {
         this.blocksPerSecond = 1;
 
         // create wall - for testing wallslide
-        const wall = new Block({
-            game: this,
-            pos: new Vector2(25, 0),
-            size: new Vector2(50, GAME_HEIGHT),
-            vel: new Vector2(0, 0)
-        });
-        this.blocks.push(wall);
+        // const wall = new Block({
+        //     game: this,
+        //     pos: new Vector2(25, 0),
+        //     size: new Vector2(50, GAME_HEIGHT),
+        //     vel: new Vector2(0, 0)
+        // });
+        // this.blocks.push(wall);
+
+        // set start scroll height
+        this.scrollHeight = Game.BASE_SCROLL_HEIGHT;
+
+        // set start height
+        this.topHeight = 0;
     }
 
     checkCollisions(moveAmount) {
@@ -48,8 +54,19 @@ export default class Game {
     }
 
     draw(ctx) {
-        this.player.draw(ctx);
-        this.blocks.forEach(block => block.draw(ctx));
+        const scrollOffset = this.scrollHeight - Game.BASE_SCROLL_HEIGHT;
+        
+        ctx.save();
+        ctx.translate(0, scrollOffset);
+
+        this.player.draw(ctx, scrollOffset);
+        this.blocks.forEach(block => block.draw(ctx, scrollOffset));
+
+        ctx.restore();
+
+        if (this.scrollHeight < this.player.pos.y) {
+            this.scrollHeight = Math.round(lerp(this.player.pos.y, this.scrollHeight, 500));
+        }
     }
 
     step() {
@@ -62,26 +79,40 @@ export default class Game {
 
         this.player.move();
         this.blocks.forEach(block => block.move());
+
+        this.blocksPerSecond = (this.scrollHeight + 1200) / 1000
+
+        if (this.topHeight < this.player.pos.y) {
+            this.topHeight = this.player.pos.y;
+        }
     }
 
     _generateBlock() {
+        const scrollOffset = this.scrollHeight - Game.BASE_SCROLL_HEIGHT;
         const randomSize = Math.floor(Math.random() * BLOCK_SIZES.length);
         const size = BLOCK_SIZES[randomSize];
 
-        const randomX = Math.floor(Math.random() * GAME_WIDTH / (BLOCK_UNIT)) * (BLOCK_UNIT) + size.x / 2
+        let randCol;
+        do {
+            randCol = Math.floor(Math.random() * GAME_WIDTH / (BLOCK_UNIT * 2));
+        } while (randCol == this.lastCol);
+        this.lastCol = randCol;
+
+        const randomX = randCol * (BLOCK_UNIT * 2) + size.x / 2
+
         const pos = new Vector2(
-            randomX, GAME_HEIGHT + size.y
+            randomX, GAME_HEIGHT + size.y + scrollOffset
         );
 
         const vel = new Vector2(
-            0, -Math.floor(Math.random() * 50 + 100)
+            0, -Math.floor(Math.random() * 50 + 150)
         );
 
         this.blocks.push(new Block({ game: this, size, pos, vel }));
     }
 
     isOffScreen(pos, size) {
-        return pos + size < 0;
+        return pos + size + 50 < this.scrollHeight - Game.BASE_SCROLL_HEIGHT;
     }
 
     remove(obj) {
@@ -94,3 +125,5 @@ export default class Game {
         // TODO
     }
 }
+
+Game.BASE_SCROLL_HEIGHT = GAME_HEIGHT / 3;

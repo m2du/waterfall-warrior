@@ -133,8 +133,8 @@ export default class Block extends MovingObject {
         }
 
         // draw hitbox
-        ctx.strokeStyle = 'red';
-        ctx.strokeRect(drawPos.x, drawPos.y, size.x, size.y);
+        // ctx.strokeStyle = 'red';
+        // ctx.strokeRect(drawPos.x, drawPos.y, size.x, size.y);
     }
 }
 

@@ -41,9 +41,9 @@ export default class Player extends MovingObject {
 
 
         // draw player hitbox
-        ctx.strokeStyle = 'red';
-        ctx.strokeRect(this.pos.x - this.size.x / 2,
-            GAME_HEIGHT - this.pos.y - this.size.y, this.size.x, this.size.y);
+        // ctx.strokeStyle = 'red';
+        // ctx.strokeRect(this.pos.x - this.size.x / 2,
+        //     GAME_HEIGHT - this.pos.y - this.size.y, this.size.x, this.size.y);
     }
 
     move() {

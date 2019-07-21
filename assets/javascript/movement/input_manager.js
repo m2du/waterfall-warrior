@@ -1,6 +1,6 @@
 export default class InputManager {
-    constructor(player) {
-        this.player = player;
+    constructor(game) {
+        this.game = game;
         this.inputFlags = {
             dirX: 0,
             dirY: 0,
@@ -36,6 +36,10 @@ export default class InputManager {
         if (e.code === 'Space') {
             inputFlags.newJump = !inputFlags.jumpPressed;
             inputFlags.jumpPressed = true;
+        }
+
+        if (e.code === 'KeyR') {
+            this.game.reset();
         }
     }
 

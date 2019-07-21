@@ -21,15 +21,27 @@
             <div id='canvas-container'>
                 <canvas id='game-canvas'></canvas>
                 <div id='height-display'>
-                    Climbed: <span id='height-value'>0</span>m
+                    <span id='height-value'>0</span>m
                 </div>
-                <div id='start-prompt'>
+                <div id='start-prompt' class='pulse'>
                     Press SPACE to start!
+                </div>
+                <div id='end-prompt'>
+                    <div id='end-text'>Game Over</div>
+                    <div id='end-summary'>
+                        <div class='summary-list-item'><span>Height Score:</span><span id='end-height'></span></div>
+                        <div class='summary-list-item'>Time Bonus: <span id='time-bonus'></span></div>
+                        <div class='summary-list-item'>Total Score: <span id='final-score'></span></div>
+                    </div>
+                    <div id='restart-prompt' class='pulse'>Press R to try again!</div>
                 </div>
             </div>
         </div>
         <aside class='flex-column-center'>
             <header>High Scores</header>
+            <ul id='highscore-list'>
+
+            </ul>
         </aside>
     </main>
 </body>

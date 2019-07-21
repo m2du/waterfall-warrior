@@ -12,6 +12,7 @@ import Block from './block';
 
 const BLOCK_SIZES = Block.BLOCK_SIZES;
 const BLOCK_UNIT = Block.BLOCK_UNIT;
+const MAX_SCORES = 20;
 
 export default class Game {
     constructor() {
@@ -20,6 +21,18 @@ export default class Game {
 
         // get start prompt
         this.startPrompt = document.getElementById('start-prompt');
+
+        // get end prompt and value displays
+        this.endPrompt = document.getElementById('end-prompt');
+        this.endHeightUI = document.getElementById('end-height');
+        this.timeBonusUI = document.getElementById('time-bonus');
+        this.finalScoreUI = document.getElementById('final-score');
+
+        // get highscore display
+        this.scoreList = document.getElementById('highscore-list');
+
+        // initialize high scores
+        this.highscores = [];
 
         this._init();
     }
@@ -40,7 +53,7 @@ export default class Game {
         ctx.restore();
 
         if (this.scrollHeight < this.player.pos.y) {
-            this.scrollHeight = Math.round(lerp(this.player.pos.y, this.scrollHeight, 500));
+            this.scrollHeight = Math.round(lerp(this.player.pos.y, this.scrollHeight, 50));
         }
 
         // update height value in UI
@@ -50,6 +63,7 @@ export default class Game {
     step() {
         if (!this.started && this.player.inputManager.inputFlags.jumpPressed) {
             this.startPrompt.style.visibility = 'hidden';
+            this.startTime = new Date();
             this.started = true;
         }
 
@@ -60,13 +74,17 @@ export default class Game {
             this.lastBlockTime = 0;
         }
 
-        this.player.move();
+        if (!this.gameover) {
+            this.player.move();
+        }
+
         this.blocks.forEach(block => block.move());
 
         this.blocksPerSecond = (this.scrollHeight + 1200) / 1000
 
         if (this.topHeight < this.player.pos.y - 50) {
             this.topHeight = this.player.pos.y - 50;
+            this.climbed = Math.floor(this.topHeight / 30);
         }
     }
 
@@ -88,14 +106,14 @@ export default class Game {
         );
 
         const vel = new Vector2(
-            0, -Math.floor(Math.random() * 50 + 150)
+            0, -Math.floor(Math.random() * 150 + 50)
         );
 
         this.blocks.push(new Block({ game: this, size, pos, vel }));
     }
 
     isOffScreen(pos, size) {
-        return pos + size + 50 < this.scrollHeight - Game.BASE_SCROLL_HEIGHT;
+        return pos + size + 15 < this.scrollHeight - Game.BASE_SCROLL_HEIGHT;
     }
 
     remove(obj) {
@@ -105,8 +123,63 @@ export default class Game {
     }
 
     end() {
-        // TODO
+        this.gameover = true;
+
+        // set height score
+        this.endHeightUI.innerHTML = `${this.climbed}m x 1000 = ${this.climbed * 1000}`;
+        
+        // set time bonus
+        const duration = new Date() - this.startTime;
+        const benchmarkHeight = GAME_HEIGHT * (duration / 60000);
+        const timeBonus = (this.topHeight > benchmarkHeight) ? (this.topHeight - benchmarkHeight) * 10 : 0;
+        this.timeBonusUI.innerHTML = Math.round(timeBonus);
+        
+        // set final score
+        const finalScore = Math.round(this.climbed * 1000 + timeBonus);
+        this.finalScoreUI.innerHTML = finalScore;
+
+        // display summary
+        this.endPrompt.style.visibility = 'visible';
+
+        // check if high score
+        this._logScore(finalScore);
+    }
+    
+    reset() {
         this._init();
+        this.endPrompt.style.visibility = 'hidden';
+    }
+
+    _logScore(score) {
+        if (this.highscores.length < MAX_SCORES) {
+            this.highscores.push(score);
+            this._refreshHighScores();
+        } else if (this.highscores[MAX_SCORES - 1] < score) {
+            this.highscores[MAX_SCORES - 1] = score;
+            this._refreshHighScores();
+        }
+
+        console.log(this.highscores);
+    }
+
+    _refreshHighScores() {
+        this.scoreList.innerHTML = '';
+
+        this.highscores.sort((a, b) => {
+            if (a < b) {
+                return 1;
+            } else if (a > b) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+
+        this.highscores.forEach(score => {
+            const scoreEl = document.createElement('li');
+            scoreEl.innerHTML = score;
+            this.scoreList.append(scoreEl);
+        });
     }
 
     _init() {
@@ -133,9 +206,11 @@ export default class Game {
 
         // set start height
         this.topHeight = 0;
+        this.climbed = 0;
 
         this.startPrompt.style.visibility = 'visible';
         this.started = false;
+        this.gameover = false;
     }
 }
 

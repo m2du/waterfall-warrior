@@ -95,7 +95,7 @@ export default class Player extends MovingObject {
     }
 
     initMovementAndState() {
-        this.inputManager = new InputManager(this);
+        this.inputManager = new InputManager(this.game);
         this.controller = new PlayerController(this);
         this.currentState = PlayerState.FALLING;
         this.facing = 1;

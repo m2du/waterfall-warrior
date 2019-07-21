@@ -6,6 +6,7 @@ import {
     PLAYER_WIDTH,
     PLAYER_HEIGHT
 } from './constants';
+import { Time } from './util/util';
 import Vector2 from './util/vector2';
 import MovingObject from "./moving_object";
 
@@ -45,7 +46,7 @@ export default class Player extends MovingObject {
             GAME_HEIGHT - this.pos.y - this.size.y, this.size.x, this.size.y);
     }
 
-    move(deltaTime) {
+    move() {
         const inputFlags = this.inputManager.inputFlags;
         this.currentState = this.currentState.handleInput(this.controller, inputFlags);
 
@@ -53,34 +54,34 @@ export default class Player extends MovingObject {
         this.currentState.handleUpdate(this.controller, inputFlags);
 
         // move player with controller
-        this.controller.move(deltaTime);
+        this.controller.move();
 
         // update animation
-        this.updateAnimation(deltaTime, inputFlags.dirX);
+        this.updateAnimation(inputFlags.dirX);
     }
 
-    updateAnimation(deltaTime, dirX) {
+    updateAnimation(dirX) {
         this.facing = (dirX != 0) ? dirX : this.facing;
 
         switch (this.currentState.name) {
             case "WALKING":
-                this.animationManager.walk(deltaTime, this.facing);
+                this.animationManager.walk(this.facing);
                 break;
             case "RISING":
-                this.animationManager.jump(deltaTime, this.facing);
+                this.animationManager.jump(this.facing);
                 break;
             case "FALLING":
-                this.animationManager.fall(deltaTime, this.facing);
+                this.animationManager.fall(this.facing);
                 break;
             case "ROLLING":
-                this.animationManager.roll(deltaTime, this.facing);
+                this.animationManager.roll(this.facing);
                 break;
             case "WALLSLIDING":
                 this.facing = this.controller.wallDirection();
-                this.animationManager.wallslide(deltaTime, this.facing);
+                this.animationManager.wallslide(this.facing);
                 break;
             default:
-                this.animationManager.idle(deltaTime, this.facing);
+                this.animationManager.idle(this.facing);
         }
     }
 

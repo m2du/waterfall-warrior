@@ -4,6 +4,7 @@ import {
     PLAYER_WIDTH,
     PLAYER_HEIGHT
 } from '../constants';
+import { Time } from '../util/util';
 import Vector2 from '../util/vector2';
 
 export default class PlayerController {
@@ -82,7 +83,8 @@ export default class PlayerController {
         this.vel.x = inputFlags.dirX * this.walkSpeed;
     }
 
-    move(deltaTime) {
+    move() {
+        const deltaTime = Time.deltaTime;
 
         // apply gravity
         this.vel.y += this.gravity * deltaTime;

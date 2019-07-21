@@ -1,3 +1,5 @@
+import { Time } from './util/util';
+
 export default class GameView {
     constructor(game, ctx) {
         this.ctx = ctx;
@@ -21,8 +23,9 @@ export default class GameView {
 
     animate(time) {
         const deltaTime = (time - this.lastTime) / 1000;
+        Time.deltaTime = deltaTime;
 
-        this.game.step(deltaTime);
+        this.game.step();
 
         // draw next frame
         this.drawBg(deltaTime);

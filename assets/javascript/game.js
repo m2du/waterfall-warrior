@@ -4,6 +4,7 @@ import {
     PLAYER_WIDTH,
     PLAYER_HEIGHT
 } from './constants';
+import { Time } from './util/util';
 import Vector2 from './util/vector2';
 
 import Player from './player';
@@ -48,16 +49,16 @@ export default class Game {
         this.player.draw(ctx);
     }
 
-    step(deltaTime) {
+    step() {
         if (this.lastBlockTime < 1 / this.blocksPerSecond) {
-            this.lastBlockTime += deltaTime;
+            this.lastBlockTime += Time.deltaTime;
         } else {
             this._generateBlock();
             this.lastBlockTime = 0;
         }
 
-        this.player.move(deltaTime);
-        this.blocks.forEach(block => block.move(deltaTime));
+        this.player.move();
+        this.blocks.forEach(block => block.move());
     }
 
     _generateBlock() {

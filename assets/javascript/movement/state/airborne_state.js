@@ -18,7 +18,6 @@ export default class AirborneState {
         }
 
         if ((inputFlags.jumpPressed && inputFlags.newJump && controller.jumps > 0) || controller.isRolling()) {
-            debugger;
             return PlayerState.ROLLING;
         }
 

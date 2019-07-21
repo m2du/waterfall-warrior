@@ -1,5 +1,6 @@
 import Game from './game';
 import Vector2 from './util/vector2';
+import { Time } from './util/util';
 
 export default class MovingObject {
     constructor(options) {
@@ -21,7 +22,9 @@ export default class MovingObject {
         // default
     }
     
-    move(deltaTime) {
+    move() {
+        const deltaTime = Time.deltaTime;
+        
         const offset = new Vector2(this.vel.x * deltaTime, this.vel.y * deltaTime);
         this.pos.add(offset);
 

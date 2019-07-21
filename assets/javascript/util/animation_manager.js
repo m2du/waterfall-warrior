@@ -1,4 +1,5 @@
 import { PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT } from '../constants';
+import { Time } from './util';
 
 export default class AnimationManager {
     constructor() {
@@ -35,11 +36,11 @@ export default class AnimationManager {
         this.currentAnim = "IDLE";
     }
 
-    idle(deltaTime, direction) {
+    idle(direction) {
         const name = "IDLE";
         const duration = 0.65;
         const numFrames = 4;
-        this._step(deltaTime, duration, numFrames, name);
+        this._step(duration, numFrames, name);
 
         if (direction === 1) {
             this.sprite[0] = this.idleBaseRight[0] + PLAYER_SPRITE_WIDTH * this.frame;
@@ -50,11 +51,11 @@ export default class AnimationManager {
         }
     }
 
-    walk(deltaTime, direction) {
+    walk(direction) {
         const name = "WALK";
-        const duration = 0.65;
+        const duration = 0.6;
         const numFrames = 6;
-        this._step(deltaTime, duration, numFrames, name);
+        this._step(duration, numFrames, name);
 
         if (direction === 1) {
             this.sprite[0] = this.walkBaseRight[0] + PLAYER_SPRITE_WIDTH * this.frame;
@@ -65,11 +66,11 @@ export default class AnimationManager {
         }
     }
 
-    jump(deltaTime, direction) {
+    jump(direction) {
         const name = "JUMP";
         const duration = .4;
         const numFrames = 2;
-        this._step(deltaTime, duration, numFrames, name);
+        this._step(duration, numFrames, name);
 
         if (direction === 1) {
             this.sprite[0] = this.jumpBaseRight[0] + PLAYER_SPRITE_WIDTH * this.frame;
@@ -80,11 +81,11 @@ export default class AnimationManager {
         }
     }
 
-    fall(deltaTime, direction) {
+    fall(direction) {
         const name = "FALL";
         const duration = .2;
         const numFrames = 2;
-        this._step(deltaTime, duration, numFrames, name);
+        this._step(duration, numFrames, name);
 
         if (direction === 1) {
             this.sprite[0] = this.fallBaseRight[0] + PLAYER_SPRITE_WIDTH * this.frame;
@@ -95,11 +96,11 @@ export default class AnimationManager {
         }
     }
 
-    roll(deltaTime, direction) {
+    roll(direction) {
         const name = "ROLL";
         const duration = .4;
         const numFrames = 4;
-        this._step(deltaTime, duration, numFrames, name);
+        this._step(duration, numFrames, name);
 
         if (direction === 1) {
             this.sprite[0] = this.rollBaseRight[0] + PLAYER_SPRITE_WIDTH * this.frame;
@@ -121,11 +122,11 @@ export default class AnimationManager {
 
     }
 
-    wallslide(deltaTime, direction) {
+    wallslide(direction) {
         const name = "WALLSLIDE";
         const duration = .2;
         const numFrames = 2;
-        this._step(deltaTime, duration, numFrames, name);
+        this._step(duration, numFrames, name);
 
         if (direction === 1) {
             this.sprite[0] = this.wallslideBaseRight[0] + PLAYER_SPRITE_WIDTH * this.frame;
@@ -136,7 +137,7 @@ export default class AnimationManager {
         }
     }
 
-    _step(deltaTime, duration, numFrames, name) {
+    _step(duration, numFrames, name) {
         if (name !== this.currentAnim) {
             this.frame = 0;
             this.lastFrameTime = 0;
@@ -144,7 +145,7 @@ export default class AnimationManager {
         }
 
         if (this.lastFrameTime < duration / numFrames) {
-            this.lastFrameTime += deltaTime;
+            this.lastFrameTime += Time.deltaTime;
         } else {
             this.frame = (this.frame + 1) % numFrames;
             this.lastFrameTime = 0;

@@ -50,7 +50,7 @@ export default class Player extends MovingObject {
         const inputFlags = this.inputManager.inputFlags;
         this.currentState = this.currentState.handleInput(this.controller, inputFlags);
 
-        if (this.currentState.name === 'JUMPING') {
+        if (this.currentState.name === 'JUMPING' && this.game.sfxOn) {
             SoundManager.jumpSFX.play();
         }
 

@@ -63,7 +63,7 @@ export default class Game {
         }
 
         // update height value in UI
-        this.heightDisplay.innerHTML = Math.floor(this.topHeight / 30);
+        this.heightDisplay.innerHTML = Math.floor(this.topHeight / 30) + 'm';
     }
 
     step() {
@@ -129,7 +129,9 @@ export default class Game {
     }
 
     end() {
-        this.hitSFX();
+        if (this.sfxOn) {
+            this.hitSFX();
+        }
         this.gameover = true;
 
         // set height score
@@ -220,6 +222,31 @@ export default class Game {
     }
 
     _audioSetup() {
+        this.bgmOn = true;
+        const bgmToggle = document.getElementById('bgmToggle');
+        bgmToggle.addEventListener('click', () => {
+            this.bgmOn = !this.bgmOn;
+            if (this.bgmOn) {
+                SoundManager.waterfallBGM.play();
+                bgmToggle.classList.remove('muted');
+            } else {
+                console.log('mute');
+                SoundManager.waterfallBGM.pause();
+                bgmToggle.classList.add('muted');
+            }
+        });
+
+        this.sfxOn = true;
+        const sfxToggle = document.getElementById('sfxToggle');
+        sfxToggle.addEventListener('click', () => {
+            this.sfxOn = !this.sfxOn;
+            if (this.sfxOn) {
+                sfxToggle.classList.remove('muted');
+            } else {
+                sfxToggle.classList.add('muted');
+            }
+        }); 
+
         SoundManager.waterfallBGM.ontimeupdate = function() {
             const buffer = .44;
             if (this.currentTime > this.duration - buffer) {

@@ -9,6 +9,8 @@
     <script src="./dist/main.js"></script>
     <link rel="stylesheet" href="./assets/css/index.css">
     <link href="https://fonts.googleapis.com/css?family=Permanent+Marker|Squada+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css"
+        integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
 </head>
 
 <body class='flex-column-center'>
@@ -29,8 +31,12 @@
         <div id='canvas-border'>
             <div id='canvas-container'>
                 <canvas id='game-canvas'></canvas>
-                <div id='height-display'>
-                    <span id='height-value'>0</span>m
+                <div id='ui-display'>
+                    <span id='audio-controls'>
+                        <i id='bgmToggle' class="fas fa-music"></i>
+                        <i id='sfxToggle' class="fas fa-volume-down"></i>
+                    </span>
+                    <span id='height-value'>0m</span>
                 </div>
                 <div id='start-prompt' class='pulse'>
                     Press SPACE to start!

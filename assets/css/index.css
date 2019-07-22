@@ -48,7 +48,7 @@ canvas {
     border: 2px solid #516c5a
 }
 
-#height-display {
+#ui-display {
     position: absolute;
     top: 0;
     left: 0;
@@ -59,6 +59,28 @@ canvas {
     padding: 1rem;
     box-sizing: border-box;
     text-align: right;
+    display: flex;
+    justify-content: space-between;
+}
+
+#audio-controls i {
+    pointer-events: all;
+    cursor: pointer;
+    padding-right: .5rem;
+}
+
+#audio-controls i:hover {
+    pointer-events: all;
+    cursor: pointer;
+    color: #ffe77e;
+}
+
+#audio-controls i:active {
+    transform: translateY(2px);
+}
+
+#audio-controls i.muted {
+    color: rgb(114, 114, 114);
 }
 
 .pulse {

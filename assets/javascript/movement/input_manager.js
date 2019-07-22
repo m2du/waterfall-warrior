@@ -21,24 +21,24 @@ export default class InputManager {
     keydown(e) {
         const inputFlags = this.inputFlags;
 
-        if (e.code === 'ArrowLeft') {
+        if (e.keyCode === 37) {
             inputFlags.dirX = -1;
-        } else if (e.code === 'ArrowRight') {
+        } else if (e.keyCode === 39) {
             inputFlags.dirX = 1;
         }
 
-        if (e.code === 'ArrowUp') {
+        if (e.keyCode === 38) {
             inputFlags.dirY = 1;
-        } else if (e.code === 'ArrowDown') {
+        } else if (e.keyCode === 40) {
             inputFlags.dirY = -1;
         }
 
-        if (e.code === 'Space') {
+        if (e.keyCode === 32) {
             inputFlags.newJump = !inputFlags.jumpPressed;
             inputFlags.jumpPressed = true;
         }
 
-        if (e.code === 'KeyR') {
+        if (e.keyCode === 82) {
             this.game.reset();
         }
     }
@@ -46,19 +46,19 @@ export default class InputManager {
     keyup(e) {
         const inputFlags = this.inputFlags;
 
-        if (e.code === 'ArrowLeft' && inputFlags.dirX < 0) {
+        if (e.keyCode === 37 && inputFlags.dirX < 0) {
             inputFlags.dirX = 0;
-        } else if (e.code === 'ArrowRight' && inputFlags.dirX > 0) {
+        } else if (e.keyCode === 39 && inputFlags.dirX > 0) {
             inputFlags.dirX = 0;
         }
 
-        if (e.code === 'ArrowUp' && inputFlags.dirY > 0) {
+        if (e.keyCode === 38 && inputFlags.dirY > 0) {
             inputFlags.dirY = 0;
-        } else if (e.code === 'ArrowDown' && inputFlags.dirY < 0) {
+        } else if (e.keyCode === 40 && inputFlags.dirY < 0) {
             inputFlags.dirY = 0;
         }
 
-        if (e.code === 'Space') {
+        if (e.keyCode === 32) {
             inputFlags.jumpPressed = false;
             inputFlags.newJump = true;
         }

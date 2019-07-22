@@ -1,3 +1,4 @@
+import { GAME_WIDTH, GAME_HEIGHT } from './constants';
 import { Time } from './util/util';
 
 export default class GameView {
@@ -7,7 +8,7 @@ export default class GameView {
 
         // waterfall animation setup
         this.waterbar = new Image();
-        this.waterbar.src = './assets/images/waterfall_sprite_sheet.png';
+        this.waterbar.src = './assets/images/waterfall.png';
         this.waterfallSpeed = .4;
         this.waterfallFrames = 6;
         this.lastFrameTime = 0;
@@ -52,7 +53,7 @@ export default class GameView {
         }
 
         // img, sourceX, sourceY, sourceH, sourceW, canvasX, canvasY, width, height
-        ctx.drawImage(this.waterbar, 620 * this.frame, 0, 620, 900,
-            -10, 0, 720, 850);
+        ctx.drawImage(this.waterbar, 140 * this.frame, 0, 140, 170,
+            0, 0, GAME_WIDTH, GAME_HEIGHT);
     }
 }

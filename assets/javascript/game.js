@@ -230,7 +230,6 @@ export default class Game {
                 SoundManager.waterfallBGM.play();
                 bgmToggle.classList.remove('muted');
             } else {
-                console.log('mute');
                 SoundManager.waterfallBGM.pause();
                 bgmToggle.classList.add('muted');
             }

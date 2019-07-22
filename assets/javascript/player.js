@@ -11,7 +11,6 @@ import MovingObject from "./moving_object";
 
 import PlayerState from './movement/state/player_state';
 import PlayerController from './movement/player_controller';
-import InputManager from './movement/input_manager';
 
 import AnimationManager from './util/animation_manager';
 import SoundManager from './util/sound_manager';

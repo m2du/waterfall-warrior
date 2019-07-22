@@ -9,6 +9,7 @@ import Vector2 from './util/vector2';
 
 import Player from './player';
 import Block from './block';
+import BlockFormations from './block_formations';
 
 import InputManager from './movement/input_manager';
 import SoundManager from './util/sound_manager';
@@ -77,11 +78,18 @@ export default class Game {
             this.started = true;
         }
 
-        if (this.lastBlockTime < 1 / this.blocksPerSecond) {
+        if (this.lastBlockTime < 1 / (this.blocksPerSecond * this.speedMulti * .9)) {
             this.lastBlockTime += Time.deltaTime;
         } else if (this.started) {
             this._generateBlock();
             this.lastBlockTime = 0;
+        }
+
+        if (this.lastFormationTime < this.formationDelay) {
+            this.lastFormationTime += Time.deltaTime;
+        } else if (this.started) {
+            this._generateFormation();
+            this.lastFormationTime = 0;
         }
 
         if (!this.gameover) {
@@ -95,31 +103,53 @@ export default class Game {
         if (this.topHeight < this.player.pos.y - 50) {
             this.topHeight = this.player.pos.y - 50;
             this.climbed = Math.floor(this.topHeight / 30);
+            
+            if (this.topHeight > GAME_HEIGHT * 1.5) {
+                this.speedMulti = this.topHeight / (GAME_HEIGHT * 1.5);
+            }
         }
     }
 
     _generateBlock() {
         const scrollOffset = this.scrollHeight - Game.BASE_SCROLL_HEIGHT;
-        const randomSize = Math.floor(Math.random() * BLOCK_SIZES.length);
-        const size = BLOCK_SIZES[randomSize];
+        const size = BLOCK_SIZES[0];
 
         let randCol;
         do {
-            randCol = Math.floor(Math.random() * GAME_WIDTH / (BLOCK_UNIT * 2));
+            randCol = Math.floor(Math.random() * GAME_WIDTH / (BLOCK_UNIT * 4));
         } while (randCol == this.lastCol);
         this.lastCol = randCol;
 
-        const randomX = randCol * (BLOCK_UNIT * 2) + size.x / 2
+        const randomX = randCol * (BLOCK_UNIT * 4) + size.x / 2
 
         const pos = new Vector2(
             randomX, GAME_HEIGHT + size.y + scrollOffset
         );
 
-        const vel = new Vector2(
-            0, - BLOCK_SPEEDS[Math.floor(Math.random() * BLOCK_SPEEDS.length)]
-        );
+        const fallSpeedIdx = Math.floor(Math.random() * (BLOCK_SPEEDS.length-2)) + 2
+        const vel = new Vector2(0, -BLOCK_SPEEDS[fallSpeedIdx] * this.speedMulti);
 
         this.blocks.push(new Block({ game: this, size, pos, vel }));
+    }
+
+    _generateFormation() {
+        const scrollOffset = this.scrollHeight - Game.BASE_SCROLL_HEIGHT;
+
+        let randFormation;
+        do {
+            randFormation = Math.floor(Math.random() * BlockFormations.length);
+        } while (randFormation == this.lastFormation);
+        this.lastFormation = randFormation;
+
+        BlockFormations[randFormation].forEach(options => {
+            let block = new Block({
+                game: this,
+                size: options.size,
+                vel: options.vel,
+                pos: new Vector2(options.pos.x + options.size.x / 2, GAME_HEIGHT + options.size.y + scrollOffset + options.pos.y)
+            });
+            this.blocks.push(block);
+        });
     }
 
     isOffScreen(pos, size) {
@@ -213,7 +243,12 @@ export default class Game {
 
         this.blocks = [floor];
         this.lastBlockTime = 0;
-        this.blocksPerSecond = 1.5;
+        this.blocksPerSecond = 1;
+
+        this.lastFormationTime = 0;
+        this.formationDelay = 4.5;
+
+        this.speedMulti = 1;
 
         // set start scroll height
         this.scrollHeight = Game.BASE_SCROLL_HEIGHT;

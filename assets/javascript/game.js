@@ -104,8 +104,8 @@ export default class Game {
             this.topHeight = this.player.pos.y - 50;
             this.climbed = Math.floor(this.topHeight / 30);
             
-            if (this.topHeight > GAME_HEIGHT * 1.5) {
-                this.speedMulti = this.topHeight / (GAME_HEIGHT * 1.5);
+            if (this.topHeight > GAME_HEIGHT * 2) {
+                this.speedMulti = this.topHeight / (GAME_HEIGHT * 2);
             }
         }
     }
@@ -186,7 +186,7 @@ export default class Game {
         this.endPrompt.style.visibility = 'visible';
 
         // check if high score
-        this._logScore(finalScore);
+        this._logScore({score: finalScore, height: this.climbed});
     }
     
     reset() {
@@ -199,7 +199,7 @@ export default class Game {
         if (this.highscores.length < MAX_SCORES) {
             this.highscores.push(score);
             this._refreshHighScores();
-        } else if (this.highscores[MAX_SCORES - 1] < score) {
+        } else if (this.highscores[MAX_SCORES - 1].score < score.score) {
             this.highscores[MAX_SCORES - 1] = score;
             this._refreshHighScores();
         }
@@ -209,9 +209,9 @@ export default class Game {
         this.scoreList.innerHTML = '';
 
         this.highscores.sort((a, b) => {
-            if (a < b) {
+            if (a.score < b.score) {
                 return 1;
-            } else if (a > b) {
+            } else if (a.score > b.score) {
                 return -1;
             } else {
                 return 0;
@@ -220,7 +220,7 @@ export default class Game {
 
         this.highscores.forEach(score => {
             const scoreEl = document.createElement('li');
-            scoreEl.innerHTML = score;
+            scoreEl.innerHTML = `${score.score} (${score.height}m)`;
             this.scoreList.append(scoreEl);
         });
     }

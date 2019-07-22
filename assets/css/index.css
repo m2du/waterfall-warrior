@@ -260,3 +260,14 @@ aside header {
 #highscore-list li {
     margin-bottom: 1rem;
 }
+
+.key {
+    color: #303030;
+    background-color: #e5e5e5;
+    border-radius: 10%;
+    box-shadow: 3px 3px #4a4a4a;
+    padding: 3px 8px;
+    vertical-align: middle;
+    margin-right: 3px;
+    margin-left: 2px;
+}

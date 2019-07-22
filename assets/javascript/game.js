@@ -222,7 +222,7 @@ export default class Game {
     }
 
     _audioSetup() {
-        this.bgmOn = true;
+        this.bgmOn = false;
         const bgmToggle = document.getElementById('bgmToggle');
         bgmToggle.addEventListener('click', () => {
             this.bgmOn = !this.bgmOn;
@@ -244,16 +244,7 @@ export default class Game {
             } else {
                 sfxToggle.classList.add('muted');
             }
-        }); 
-
-        SoundManager.waterfallBGM.ontimeupdate = function() {
-            const buffer = .44;
-            if (this.currentTime > this.duration - buffer) {
-                this.currentTime = 0;
-                this.play();
-            }
-        };
-        SoundManager.waterfallBGM.play();
+        });
     }
 
     jumpSFX() {

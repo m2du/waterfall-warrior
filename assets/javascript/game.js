@@ -10,6 +10,7 @@ import Vector2 from './util/vector2';
 import Player from './player';
 import Block from './block';
 
+import InputManager from './movement/input_manager';
 import SoundManager from './util/sound_manager';
 
 const BLOCK_SIZES = Block.BLOCK_SIZES;
@@ -19,6 +20,9 @@ const MAX_SCORES = 10;
 
 export default class Game {
     constructor() {
+        // initialize input manager
+        this.inputManager = new InputManager(this);
+
         // get height display
         this.heightDisplay = document.getElementById('height-value');
 
@@ -158,6 +162,7 @@ export default class Game {
     reset() {
         this._init();
         this.endPrompt.style.visibility = 'hidden';
+        console.log(this.blocks);
     }
 
     _logScore(score) {
@@ -194,7 +199,8 @@ export default class Game {
         // create player
         this.player = new Player({
             game: this,
-            size: new Vector2(PLAYER_WIDTH, PLAYER_HEIGHT)
+            size: new Vector2(PLAYER_WIDTH, PLAYER_HEIGHT),
+            inputManager: this.inputManager
         });
 
         // create floor

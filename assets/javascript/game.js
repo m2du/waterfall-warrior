@@ -64,7 +64,7 @@ export default class Game {
         ctx.restore();
 
         if (this.scrollHeight < this.player.pos.y) {
-            this.scrollHeight = Math.round(lerp(this.player.pos.y, this.scrollHeight, 100));
+            this.scrollHeight = Math.round(lerp(this.player.pos.y, this.scrollHeight, 75));
         }
 
         // update height value in UI

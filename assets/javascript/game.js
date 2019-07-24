@@ -8,8 +8,8 @@ import { Time, lerp } from './util/util';
 import Vector2 from './util/vector2';
 
 import Player from './player';
-import Block from './block';
-import BlockFormations from './block_formations';
+import Block from './block/block';
+import BlockFormations from './block/block_formations';
 
 import InputManager from './movement/input_manager';
 import SoundManager from './util/sound_manager';

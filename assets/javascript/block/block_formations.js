@@ -1,4 +1,4 @@
-import Vector2 from './util/vector2';
+import Vector2 from '../util/vector2';
 import Block from './block';
 
 const BLOCK_UNIT = Block.BLOCK_UNIT;

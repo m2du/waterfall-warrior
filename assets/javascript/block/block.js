@@ -1,12 +1,6 @@
-import {
-    GAME_WIDTH,
-    GAME_HEIGHT,
-    PLAYER_WIDTH,
-    PLAYER_HEIGHT,
-    SKIN_WIDTH
-} from './constants';
-import Vector2 from './util/vector2';
-import MovingObject from './moving_object';
+import { GAME_HEIGHT } from '../constants';
+import Vector2 from '../util/vector2';
+import MovingObject from '../moving_object';
 
 const TILESET = new Image();
 TILESET.src = './assets/images/tileset.png'
@@ -78,8 +72,8 @@ export default class Block extends MovingObject {
         const maxCol = size.x / Block.BLOCK_UNIT;
 
         // draw block
-        for (let i=0; i < maxRow; i++) {
-            for (let j=0; j < maxCol; j++) {
+        for (let i = 0; i < maxRow; i++) {
+            for (let j = 0; j < maxCol; j++) {
                 const drawOffsetX = drawSize * j;
                 const drawOffsetY = drawSize * i;
 

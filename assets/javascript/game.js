@@ -44,7 +44,12 @@ export default class Game {
         this.scoreList = document.getElementById('highscore-list');
 
         // initialize high scores
-        this.highscores = [];
+        // localStorage.removeItem('highscores');
+        let savedScores = localStorage.getItem('highscores');
+        this.highscores = (savedScores) ? this._mapStringToScore(savedScores) : [];
+        if (this.highscores.length > 0) {
+            this._refreshHighScores();
+        }
 
         this._init();
     }
@@ -200,11 +205,37 @@ export default class Game {
             }
         });
 
+        localStorage.setItem('highscores', this._mapScoresToString());
+
         this.highscores.forEach(score => {
             const scoreEl = document.createElement('li');
             scoreEl.innerHTML = `${score.score} (${score.height}m)`;
             this.scoreList.append(scoreEl);
         });
+    }
+
+    _mapScoresToString() {
+        let scoreStr = '';
+
+        this.highscores.forEach(score => {
+            scoreStr += `${score.score},${score.height};`;
+        });
+
+        return scoreStr;
+    }
+
+    _mapStringToScore(str) {
+        let entries = str.split(";");
+        let scores = [];
+        entries.pop();
+        entries.forEach(entry => {
+            entry = entry.split(",");
+            scores.push({
+                score: Number(entry[0]),
+                height: Number(entry[1])
+            });
+        });
+        return scores;
     }
 
     _init() {

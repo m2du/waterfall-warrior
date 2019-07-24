@@ -26,12 +26,13 @@ main {
 #canvas-container {
     position: relative;
     background: #94746e;
-    width: 700px;
-    height: 850px;
+    width: 630px;
+    height: 765px;
     border: 2px solid #516c5a;
     pointer-events: none;
     user-select: none;
     text-shadow: 3px 3px #505050;
+    margin: auto 0;
 }
 
 canvas {

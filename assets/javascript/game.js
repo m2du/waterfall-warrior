@@ -107,7 +107,6 @@ export default class Game {
     }
 
     addBlock(block) {
-        console.log(block);
         this.blocks.push(block);
     }
 

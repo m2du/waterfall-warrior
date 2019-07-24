@@ -37,7 +37,7 @@ export default class FormationManager {
                 vel: options.vel,
                 pos: new Vector2(options.pos.x + options.size.x / 2, GAME_HEIGHT + options.size.y + scrollOffset + options.pos.y)
             });
-            // debugger;
+            
             this.game.addBlock(block);
         });
     }

@@ -101,6 +101,9 @@ export default class PlayerController {
     airborne(inputFlags) {
         this.inputFlags = inputFlags;
         this.vel.x = lerp(inputFlags.dirX * this.walkSpeed, this.vel.x, AIR_SMOOTHING);
+        if (!inputFlags.jumpPressed && this.vel.y > 0) {
+            this.vel.y += this.gravity * Time.deltaTime * 2;
+        }
     }
 
     move() {
@@ -108,7 +111,7 @@ export default class PlayerController {
 
         // apply gravity
         this.vel.y += this.gravity * deltaTime;
-        if (this.vel.y < MAX_FALL_SPEED) {
+        if (this.vel.y < MAX_FALL_SPEED && this.inputFlags.dirY !== -1) {
             this.vel.y = MAX_FALL_SPEED;
         }
 
@@ -122,6 +125,10 @@ export default class PlayerController {
             if (this.vel.y < slideSpeedMax) {
                 this.vel.y = slideSpeedMax;
             }
+        }
+
+        if (this.inputFlags.dirY === -1) {
+            this.vel.y += this.gravity * Time.deltaTime;
         }
 
         // calc movement vector

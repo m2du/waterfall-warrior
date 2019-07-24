@@ -10,6 +10,7 @@ import Vector2 from './util/vector2';
 import Player from './player';
 import Block from './block/block';
 import BlockFormations from './block/block_formations';
+import FormationManager from './block/formation_manager';
 
 import InputManager from './movement/input_manager';
 import SoundManager from './util/sound_manager';
@@ -85,12 +86,7 @@ export default class Game {
             this.lastBlockTime = 0;
         }
 
-        if (this.lastFormationTime < this.formationDelay) {
-            this.lastFormationTime += Time.deltaTime;
-        } else if (this.started) {
-            this._generateFormation();
-            this.lastFormationTime = 0;
-        }
+        this.formationManager.monitorFormations();
 
         if (!this.gameover) {
             this.player.move();
@@ -108,6 +104,11 @@ export default class Game {
                 this.speedMulti = this.topHeight / (GAME_HEIGHT * 2);
             }
         }
+    }
+
+    addBlock(block) {
+        console.log(block);
+        this.blocks.push(block);
     }
 
     _generateBlock() {
@@ -130,26 +131,6 @@ export default class Game {
         const vel = new Vector2(0, -BLOCK_SPEEDS[fallSpeedIdx] * this.speedMulti);
 
         this.blocks.push(new Block({ game: this, size, pos, vel }));
-    }
-
-    _generateFormation() {
-        const scrollOffset = this.scrollHeight - Game.BASE_SCROLL_HEIGHT;
-
-        let randFormation;
-        do {
-            randFormation = Math.floor(Math.random() * BlockFormations.length);
-        } while (randFormation == this.lastFormation);
-        this.lastFormation = randFormation;
-
-        BlockFormations[randFormation].forEach(options => {
-            let block = new Block({
-                game: this,
-                size: options.size,
-                vel: options.vel,
-                pos: new Vector2(options.pos.x + options.size.x / 2, GAME_HEIGHT + options.size.y + scrollOffset + options.pos.y)
-            });
-            this.blocks.push(block);
-        });
     }
 
     isOffScreen(pos, size) {
@@ -242,6 +223,7 @@ export default class Game {
         });
 
         this.blocks = [floor];
+        this.formationManager = new FormationManager(this);
         this.lastBlockTime = 0;
         this.blocksPerSecond = 1;
 

@@ -26,7 +26,7 @@ const BigMidBig1 = [
 const BigMidBig2 = [
     {
         size: BLOCK_SIZES[5],
-        pos: new Vector2(2, 16).scale(BLOCK_UNIT),
+        pos: new Vector2(18, 0).scale(BLOCK_UNIT),
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
     {
@@ -36,9 +36,9 @@ const BigMidBig2 = [
     },
     {
         size: BLOCK_SIZES[5],
-        pos: new Vector2(18, 0).scale(BLOCK_UNIT),
+        pos: new Vector2(2, 16).scale(BLOCK_UNIT),
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
-    }
+    },
 ];
 
 const TallMidTall = [
@@ -53,15 +53,15 @@ const TallMidTall = [
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
     {
+        size: BLOCK_SIZES[3],
+        pos: new Vector2(20, 4).scale(BLOCK_UNIT),
+        vel: new Vector2(0, -BLOCK_SPEEDS[2])
+    },
+    {
         size: BLOCK_SIZES[1],
         pos: new Vector2(12, 24).scale(BLOCK_UNIT),
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
-    {
-        size: BLOCK_SIZES[3],
-        pos: new Vector2(20, 4).scale(BLOCK_UNIT),
-        vel: new Vector2(0, -BLOCK_SPEEDS[2])
-    }
 ]
 
 const Staircase1 = [
@@ -90,12 +90,7 @@ const Staircase1 = [
 const Staircase2 = [
     {
         size: BLOCK_SIZES[0],
-        pos: new Vector2(0, 22).scale(BLOCK_UNIT),
-        vel: new Vector2(0, -BLOCK_SPEEDS[2])
-    },
-    {
-        size: BLOCK_SIZES[4],
-        pos: new Vector2(6, 12).scale(BLOCK_UNIT),
+        pos: new Vector2(26, 0).scale(BLOCK_UNIT),
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
     {
@@ -104,8 +99,13 @@ const Staircase2 = [
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
     {
+        size: BLOCK_SIZES[4],
+        pos: new Vector2(6, 12).scale(BLOCK_UNIT),
+        vel: new Vector2(0, -BLOCK_SPEEDS[2])
+    },
+    {
         size: BLOCK_SIZES[0],
-        pos: new Vector2(26, 0).scale(BLOCK_UNIT),
+        pos: new Vector2(0, 22).scale(BLOCK_UNIT),
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
 ]

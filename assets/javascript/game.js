@@ -9,7 +9,6 @@ import Vector2 from './util/vector2';
 
 import Player from './player';
 import Block from './block/block';
-import BlockFormations from './block/block_formations';
 import FormationManager from './block/formation_manager';
 
 import InputManager from './movement/input_manager';
@@ -18,6 +17,7 @@ import SoundManager from './util/sound_manager';
 const BLOCK_SIZES = Block.BLOCK_SIZES;
 const BLOCK_UNIT = Block.BLOCK_UNIT;
 const BLOCK_SPEEDS = Block.BLOCK_SPEEDS;
+const BLOCK_MAX_SPEED = -(GAME_HEIGHT / 3.5);
 const MAX_SCORES = 10;
 
 export default class Game {
@@ -100,13 +100,16 @@ export default class Game {
             this.topHeight = this.player.pos.y - 50;
             this.climbed = Math.floor(this.topHeight / 30);
             
-            if (this.topHeight > GAME_HEIGHT * 2) {
-                this.speedMulti = this.topHeight / (GAME_HEIGHT * 2);
+            if (this.topHeight > GAME_HEIGHT * 3) {
+                this.speedMulti = this.topHeight / (GAME_HEIGHT * 3);
             }
         }
     }
 
     addBlock(block) {
+        if (block.vel.y < BLOCK_MAX_SPEED) {
+            block.vel.y *= this.speedMulti;
+        }
         this.blocks.push(block);
     }
 
@@ -126,7 +129,7 @@ export default class Game {
             randomX, GAME_HEIGHT + size.y + scrollOffset
         );
 
-        const fallSpeedIdx = Math.floor(Math.random() * (BLOCK_SPEEDS.length-2)) + 2
+        const fallSpeedIdx = Math.floor(Math.random() * (BLOCK_SPEEDS.length-3)) + 3
         const vel = new Vector2(0, -BLOCK_SPEEDS[fallSpeedIdx] * this.speedMulti);
 
         this.blocks.push(new Block({ game: this, size, pos, vel }));
@@ -172,7 +175,6 @@ export default class Game {
     reset() {
         this._init();
         this.endPrompt.style.visibility = 'hidden';
-        console.log(this.blocks);
     }
 
     _logScore(score) {
@@ -224,10 +226,7 @@ export default class Game {
         this.blocks = [floor];
         this.formationManager = new FormationManager(this);
         this.lastBlockTime = 0;
-        this.blocksPerSecond = 1;
-
-        this.lastFormationTime = 0;
-        this.formationDelay = 4.5;
+        this.blocksPerSecond = .5;
 
         this.speedMulti = 1;
 

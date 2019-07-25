@@ -36,7 +36,7 @@ export default class FormationManager {
             let block = new Block({
                 game: this.game,
                 size: options.size,
-                vel: {...options.vel},
+                vel: options.vel,
                 pos: new Vector2(options.pos.x + options.size.x / 2, GAME_HEIGHT + options.size.y + scrollOffset + options.pos.y)
             });
             this.topPos = block.pos;

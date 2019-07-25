@@ -17,7 +17,7 @@ import SoundManager from './util/sound_manager';
 const BLOCK_SIZES = Block.BLOCK_SIZES;
 const BLOCK_UNIT = Block.BLOCK_UNIT;
 const BLOCK_SPEEDS = Block.BLOCK_SPEEDS;
-const BLOCK_MAX_SPEED = -(GAME_HEIGHT / 3);
+const BLOCK_MAX_SPEED = -150;
 const MAX_SCORES = 10;
 
 export default class Game {
@@ -70,7 +70,7 @@ export default class Game {
         ctx.restore();
 
         if (this.scrollHeight < this.player.pos.y) {
-            this.scrollHeight = Math.round(lerp(this.player.pos.y, this.scrollHeight, 85));
+            this.scrollHeight = Math.round(lerp(this.player.pos.y, this.scrollHeight, 75));
         }
 
         // update height value in UI
@@ -106,14 +106,15 @@ export default class Game {
             this.climbed = Math.floor(this.topHeight / 30);
             
             if (this.topHeight > GAME_HEIGHT * 3) {
-                this.speedMulti = this.topHeight / (GAME_HEIGHT * 3);
+                this.speedMulti = lerp(this.topHeight / (GAME_HEIGHT * 4), this.speedMulti, 50);
             }
         }
     }
 
     addBlock(block) {
+        block.vel.y = -100 * this.speedMulti * 0.95;
         if (block.vel.y < BLOCK_MAX_SPEED) {
-            block.vel.y *= this.speedMulti;
+            block.vel.y = BLOCK_MAX_SPEED;
         }
         this.blocks.push(block);
     }

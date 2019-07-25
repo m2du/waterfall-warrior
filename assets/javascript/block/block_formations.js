@@ -18,7 +18,7 @@ const BigMidBig1 = [
     },
     {
         size: BLOCK_SIZES[5],
-        pos: new Vector2(18, 8).scale(BLOCK_UNIT),
+        pos: new Vector2(18, 10).scale(BLOCK_UNIT),
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     }
 ];
@@ -36,7 +36,7 @@ const BigMidBig2 = [
     },
     {
         size: BLOCK_SIZES[5],
-        pos: new Vector2(2, 8).scale(BLOCK_UNIT),
+        pos: new Vector2(2, 10).scale(BLOCK_UNIT),
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
 ];

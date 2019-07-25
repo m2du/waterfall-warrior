@@ -12,13 +12,13 @@ const BigMidBig1 = [
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
     {
-        size: BLOCK_SIZES[1],
+        size: new Vector2(4, 2).scale(BLOCK_UNIT),
         pos: new Vector2(12, 8).scale(BLOCK_UNIT),
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
     {
         size: BLOCK_SIZES[5],
-        pos: new Vector2(18, 16).scale(BLOCK_UNIT),
+        pos: new Vector2(18, 8).scale(BLOCK_UNIT),
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     }
 ];
@@ -30,18 +30,18 @@ const BigMidBig2 = [
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
     {
-        size: BLOCK_SIZES[1],
+        size: new Vector2(4, 2).scale(BLOCK_UNIT),
         pos: new Vector2(12, 8).scale(BLOCK_UNIT),
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
     {
         size: BLOCK_SIZES[5],
-        pos: new Vector2(2, 16).scale(BLOCK_UNIT),
+        pos: new Vector2(2, 8).scale(BLOCK_UNIT),
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
 ];
 
-const TallMidTall = [
+const Diamond = [
     {
         size: BLOCK_SIZES[3],
         pos: new Vector2(4, 4).scale(BLOCK_UNIT),
@@ -59,7 +59,7 @@ const TallMidTall = [
     },
     {
         size: BLOCK_SIZES[1],
-        pos: new Vector2(12, 24).scale(BLOCK_UNIT),
+        pos: new Vector2(12, 20).scale(BLOCK_UNIT),
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
 ]
@@ -110,10 +110,81 @@ const Staircase2 = [
     },
 ]
 
+const Five = [
+    {
+        size: BLOCK_SIZES[1],
+        pos: new Vector2(4, 0).scale(BLOCK_UNIT),
+        vel: new Vector2(0, -BLOCK_SPEEDS[2])
+    },
+    {
+        size: BLOCK_SIZES[1],
+        pos: new Vector2(20, 0).scale(BLOCK_UNIT),
+        vel: new Vector2(0, -BLOCK_SPEEDS[2])
+    },
+    {
+        size: BLOCK_SIZES[1],
+        pos: new Vector2(12, 8).scale(BLOCK_UNIT),
+        vel: new Vector2(0, -BLOCK_SPEEDS[2])
+    },
+    {
+        size: BLOCK_SIZES[1],
+        pos: new Vector2(4, 16).scale(BLOCK_UNIT),
+        vel: new Vector2(0, -BLOCK_SPEEDS[2])
+    },
+    {
+        size: BLOCK_SIZES[1],
+        pos: new Vector2(20, 16).scale(BLOCK_UNIT),
+        vel: new Vector2(0, -BLOCK_SPEEDS[2])
+    },
+]
 
-const BlockFormations = [
-    BigMidBig1, BigMidBig2, TallMidTall, Staircase1, Staircase2
+const Hourglass = [
+    {
+        size: BLOCK_SIZES[0],
+        pos: new Vector2(6, 0).scale(BLOCK_UNIT),
+        vel: new Vector2(0, -BLOCK_SPEEDS[2])
+    },
+    {
+        size: BLOCK_SIZES[3],
+        pos: new Vector2(12, -4).scale(BLOCK_UNIT),
+        vel: new Vector2(0, -BLOCK_SPEEDS[2])
+    },
+    {
+        size: BLOCK_SIZES[0],
+        pos: new Vector2(20, 0).scale(BLOCK_UNIT),
+        vel: new Vector2(0, -BLOCK_SPEEDS[2])
+    },
+    {
+        size: BLOCK_SIZES[0],
+        pos: new Vector2(10, 12).scale(BLOCK_UNIT),
+        vel: new Vector2(0, -BLOCK_SPEEDS[2])
+    },
+    {
+        size: BLOCK_SIZES[0],
+        pos: new Vector2(16, 12).scale(BLOCK_UNIT),
+        vel: new Vector2(0, -BLOCK_SPEEDS[2])
+    },
+    {
+        size: BLOCK_SIZES[0],
+        pos: new Vector2(6, 24).scale(BLOCK_UNIT),
+        vel: new Vector2(0, -BLOCK_SPEEDS[2])
+    },
+    {
+        size: BLOCK_SIZES[3],
+        pos: new Vector2(12, 16).scale(BLOCK_UNIT),
+        vel: new Vector2(0, -BLOCK_SPEEDS[2])
+    },
+    {
+        size: BLOCK_SIZES[0],
+        pos: new Vector2(20, 24).scale(BLOCK_UNIT),
+        vel: new Vector2(0, -BLOCK_SPEEDS[2])
+    },
+]
+
+export const CenterFormations = [
+    Diamond, Five, Hourglass
 ];
 
-export default BlockFormations;
-
+export const StaircaseFormations = [
+    BigMidBig1, BigMidBig2, Staircase1, Staircase2
+];

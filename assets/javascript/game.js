@@ -17,7 +17,7 @@ import SoundManager from './util/sound_manager';
 const BLOCK_SIZES = Block.BLOCK_SIZES;
 const BLOCK_UNIT = Block.BLOCK_UNIT;
 const BLOCK_SPEEDS = Block.BLOCK_SPEEDS;
-const BLOCK_MAX_SPEED = -(GAME_HEIGHT / 3.5);
+const BLOCK_MAX_SPEED = -(GAME_HEIGHT / 3);
 const MAX_SCORES = 10;
 
 export default class Game {
@@ -70,7 +70,7 @@ export default class Game {
         ctx.restore();
 
         if (this.scrollHeight < this.player.pos.y) {
-            this.scrollHeight = Math.round(lerp(this.player.pos.y, this.scrollHeight, 75));
+            this.scrollHeight = Math.round(lerp(this.player.pos.y, this.scrollHeight, 85));
         }
 
         // update height value in UI
@@ -158,7 +158,7 @@ export default class Game {
 
         // set height score
         const heightScore = this.climbed * 100;
-        this.endHeightUI.innerHTML = `${this.climbed}m x 100 = ${heightScore}`;
+        this.endHeightUI.innerHTML = `${this.climbed}m x 100`;
         
         // set time bonus
         const duration = new Date() - this.startTime;

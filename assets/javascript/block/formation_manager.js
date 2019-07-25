@@ -1,7 +1,6 @@
 import { GAME_HEIGHT } from '../constants';
-import { Time } from '../util/util';
 import Vector2 from '../util/vector2';
-import BlockFormations from './block_formations';
+import { CenterFormations, StaircaseFormations } from './block_formations';
 import Block from './block';
 import Game from '../game';
 
@@ -12,6 +11,10 @@ export default class FormationManager {
         this.lastFormationTime = 0;
         this.formationDelay = 4.5;
         this.topPos = new Vector2(0, 0);
+        this.queue = [
+            StaircaseFormations, CenterFormations
+        ];
+        this.queueIndex = 0;
     }
 
     monitorFormations() {
@@ -22,15 +25,14 @@ export default class FormationManager {
     }
 
     _addFormation() {
+        const formations = this.queue[this.queueIndex];
+        this.queueIndex = (this.queueIndex + 1) % this.queue.length;
+
         const scrollOffset = this.game.scrollHeight - Game.BASE_SCROLL_HEIGHT + FORMATION_SPACING;
 
-        let randFormation;
-        do {
-            randFormation = Math.floor(Math.random() * BlockFormations.length);
-        } while (randFormation == this.lastFormation);
-        this.lastFormation = randFormation;
+        let randFormation = Math.floor(Math.random() * formations.length);
 
-        BlockFormations[randFormation].forEach(options => {
+        formations[randFormation].forEach(options => {
             let block = new Block({
                 game: this.game,
                 size: options.size,

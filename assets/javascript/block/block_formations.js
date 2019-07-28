@@ -13,7 +13,7 @@ const BigMidBig1 = [
     },
     {
         size: new Vector2(4, 2).scale(BLOCK_UNIT),
-        pos: new Vector2(12, 8).scale(BLOCK_UNIT),
+        pos: new Vector2(12, 6).scale(BLOCK_UNIT),
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
     {
@@ -31,7 +31,7 @@ const BigMidBig2 = [
     },
     {
         size: new Vector2(4, 2).scale(BLOCK_UNIT),
-        pos: new Vector2(12, 8).scale(BLOCK_UNIT),
+        pos: new Vector2(12, 6).scale(BLOCK_UNIT),
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
     {
@@ -43,18 +43,18 @@ const BigMidBig2 = [
 
 const Diamond = [
     {
-        size: BLOCK_SIZES[3],
-        pos: new Vector2(4, 4).scale(BLOCK_UNIT),
-        vel: new Vector2(0, -BLOCK_SPEEDS[2])
-    },
-    {
         size: BLOCK_SIZES[1],
         pos: new Vector2(12, 0).scale(BLOCK_UNIT),
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
     {
         size: BLOCK_SIZES[3],
-        pos: new Vector2(20, 4).scale(BLOCK_UNIT),
+        pos: new Vector2(4, 8).scale(BLOCK_UNIT),
+        vel: new Vector2(0, -BLOCK_SPEEDS[2])
+    },
+    {
+        size: BLOCK_SIZES[3],
+        pos: new Vector2(20, 8).scale(BLOCK_UNIT),
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
     {
@@ -72,12 +72,12 @@ const Staircase1 = [
     },
     {
         size: BLOCK_SIZES[4],
-        pos: new Vector2(6, 4).scale(BLOCK_UNIT),
+        pos: new Vector2(6, 6).scale(BLOCK_UNIT),
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
     {
         size: BLOCK_SIZES[4],
-        pos: new Vector2(16, 12).scale(BLOCK_UNIT),
+        pos: new Vector2(16, 14).scale(BLOCK_UNIT),
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
     {
@@ -95,12 +95,12 @@ const Staircase2 = [
     },
     {
         size: BLOCK_SIZES[4],
-        pos: new Vector2(16, 4).scale(BLOCK_UNIT),
+        pos: new Vector2(16, 6).scale(BLOCK_UNIT),
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
     {
         size: BLOCK_SIZES[4],
-        pos: new Vector2(6, 12).scale(BLOCK_UNIT),
+        pos: new Vector2(6, 14).scale(BLOCK_UNIT),
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
     {
@@ -146,7 +146,7 @@ const Hourglass = [
     },
     {
         size: BLOCK_SIZES[3],
-        pos: new Vector2(12, -4).scale(BLOCK_UNIT),
+        pos: new Vector2(12, 0).scale(BLOCK_UNIT),
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
     {
@@ -171,7 +171,7 @@ const Hourglass = [
     },
     {
         size: BLOCK_SIZES[3],
-        pos: new Vector2(12, 16).scale(BLOCK_UNIT),
+        pos: new Vector2(12, 20).scale(BLOCK_UNIT),
         vel: new Vector2(0, -BLOCK_SPEEDS[2])
     },
     {

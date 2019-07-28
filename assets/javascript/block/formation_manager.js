@@ -37,7 +37,7 @@ export default class FormationManager {
                 game: this.game,
                 size: options.size,
                 vel: options.vel,
-                pos: new Vector2(options.pos.x + options.size.x / 2, GAME_HEIGHT + options.size.y + scrollOffset + options.pos.y)
+                pos: new Vector2(options.pos.x + options.size.x / 2, GAME_HEIGHT + scrollOffset + FORMATION_SPACING + options.pos.y)
             });
             this.topPos = block.pos;
             

@@ -6,7 +6,7 @@ import FallingState from './falling_state';
 import RollingState from './rolling_state';
 import WallslidingState from './wallsliding_state';
 
-export default function PlayerState() {};
+const PlayerState = {};
 
 PlayerState.IDLE = new IdleState();
 PlayerState.WALKING = new WalkingState();
@@ -15,3 +15,5 @@ PlayerState.FALLING = new FallingState();
 PlayerState.JUMPING = new JumpingState();
 PlayerState.ROLLING = new RollingState();
 PlayerState.WALLSLIDING = new WallslidingState();
+
+export default PlayerState;

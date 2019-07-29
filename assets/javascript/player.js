@@ -47,9 +47,13 @@ export default class Player extends MovingObject {
     }
 
     move() {
+        // get current inputs
         const inputFlags = this.inputManager.inputFlags;
+
+        // update state based on current inputs
         this.currentState = this.currentState.handleInput(this.controller, inputFlags);
 
+        // play jump sfx if new jump
         if (this.currentState.name === 'JUMPING' && this.game.sfxOn) {
             SoundManager.jumpSFX.play();
         }
@@ -64,7 +68,8 @@ export default class Player extends MovingObject {
         this.updateAnimation(inputFlags.dirX);
 
         // check game over
-        if (this.game.isOffScreen(this.pos.y, this.size.y) || this.controller.gotSquished()) {
+        if (this.game.isOffScreen(this.pos.y, this.size.y) ||
+            this.controller.gotSquished()) {
             this.dead();
         }
     }

@@ -27,13 +27,12 @@ main {
     background: #94746e;
     width: calc(700 / 850 * 85vh);
     height: 85vh;
-    min-height: 640px;
-    min-width: calc(700 / 850 * 640px);
     border: .15rem solid #516c5a;
     pointer-events: none;
     user-select: none;
     text-shadow: .2rem .2rem #505050;
     padding: 0;
+    box-sizing: border-box;
 }
 
 canvas {
@@ -130,7 +129,7 @@ canvas {
 }
 
 #end-prompt {
-    position: absolute;
+    position: relative;
     top: 0;
     lefT: 0;
     height: 100%;
@@ -187,12 +186,16 @@ canvas {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px;
+    padding: .15rem;
     box-sizing: border-box;
 }
 
 #restart-prompt {
-    margin-top: 1rem;
+    position: absolute;
+    top: -3rem;
+    left: 0;
+    width: 100%;
+    height: 2.25rem;
     font-size: 2.25rem;
     text-align: center;
 }
@@ -213,18 +216,22 @@ aside {
 aside header {
     width: 100%;
     font-weight: 600;
-    font-size: 3rem;
-    line-height: 3rem;
-    padding: 12px;
+    font-size: 2.75rem;
+    line-height: 2.75rem;
+    padding: .5rem;
+    padding-top: 0;
+    box-sizing: border-box;
     text-align: center;
 }
 
 #blurb {
-    font-size: 2rem;
+    font-size: 1.75rem;
     font-family: 'Permanent Marker';
     text-align: center;
     margin-top: 1rem;
     margin-bottom: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 #instruction-list {
@@ -276,6 +283,13 @@ aside header {
     margin-bottom: .3rem;
 }
 
+@media (min-width: 601px) {
+    #canvas-container {
+        min-height: 640px;
+        min-width: calc(700 / 850 * 640px);
+    }
+}
+
 @media (max-width: 1600px) {
     main {
         width: 65vw;
@@ -283,7 +297,36 @@ aside header {
         flex-direction: column;
         align-items: center;
     }
+
     aside {
         width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    html {
+        font-size: 10px;
+    }
+
+    main {
+        width: 100vw;
+        min-width: 0;
+    }
+    
+    #canvas-border {
+        width: 95vw;
+        height: calc(850 / 700 * 95vw);
+        box-sizing: border-box;
+    }
+
+    #canvas-container {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+@media (max-width: 320px) {
+    html {
+        font-size: 9px;
     }
 }

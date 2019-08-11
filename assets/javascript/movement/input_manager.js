@@ -14,8 +14,8 @@ export default class InputManager {
     }
 
     addListeners() {
-        document.addEventListener('keydown', this.keydown);
-        document.addEventListener('keyup', this.keyup);
+        window.addEventListener('keydown', this.keydown);
+        window.addEventListener('keyup', this.keyup);
     }
 
     keydown(e) {
@@ -34,8 +34,10 @@ export default class InputManager {
         }
 
         if (e.keyCode === 32) {
+            e.preventDefault();
             inputFlags.newJump = !inputFlags.jumpPressed;
             inputFlags.jumpPressed = true;
+            return false;
         }
 
         if (e.keyCode === 82) {
@@ -59,6 +61,7 @@ export default class InputManager {
         }
 
         if (e.keyCode === 32) {
+            e.preventDefault();
             inputFlags.jumpPressed = false;
             inputFlags.newJump = true;
         }

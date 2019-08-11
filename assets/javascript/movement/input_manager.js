@@ -22,14 +22,18 @@ export default class InputManager {
         const inputFlags = this.inputFlags;
 
         if (e.keyCode === 37) {
+            e.preventDefault();
             inputFlags.dirX = -1;
         } else if (e.keyCode === 39) {
+            e.preventDefault();
             inputFlags.dirX = 1;
         }
 
         if (e.keyCode === 38) {
+            e.preventDefault();
             inputFlags.dirY = 1;
         } else if (e.keyCode === 40) {
+            e.preventDefault();
             inputFlags.dirY = -1;
         }
 
@@ -61,7 +65,6 @@ export default class InputManager {
         }
 
         if (e.keyCode === 32) {
-            e.preventDefault();
             inputFlags.jumpPressed = false;
             inputFlags.newJump = true;
         }

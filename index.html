@@ -18,7 +18,7 @@
         <aside class='flex-column-center'>
             <header>Instructions</header>
             <div id='blurb'>Don't fall. Don't get crushed.<br/>Jump your way to the top!</div>
-            <ul id='instruction-list'>
+            <ul class='instruction-list keyboard'>
                 <li><span class='key'><i class="fas fa-arrow-left"></i></span> / <span class='key'><i class="fas fa-arrow-right"></i></span> to move</li>
                 <li>Press <span class='key'>SPACE</span> to jump</li>
                 <li>Hold <span class='key'>SPACE</span> to jump higher</li>
@@ -26,6 +26,16 @@
                 <li id='wallslide-header'>Wall Sliding</li>
                 <li>Press into walls while in the air to slide</li>
                 <li><span class='key'><i class="fas fa-arrow-left"></i></span> / <span class='key'><i class="fas fa-arrow-right"></i></span> + <span class='key'>Space</span> to wall jump</li>
+            </ul>
+            <ul class='instruction-list touch hidden'>
+                <li><span class='key'><i class="fas fa-arrow-left"></i></span> / <span class='key'><i
+                            class="fas fa-arrow-right"></i></span> to move</li>
+                <li>Press right button to jump</li>
+                <li>Hold jump to go higher</li>
+                <li>Hold <span class='key'><i class="fas fa-arrow-down"></i></span> to fall faster</li>
+                <li id='wallslide-header'>Wall Sliding</li>
+                <li>Wall slide while falling</li>
+                <li>Press jump to perform wall jumps</li>
             </ul>
         </aside>
         <div id='canvas-border'>
@@ -49,6 +59,16 @@
                         <div class='summary-list-item'>Total Score: <span id='final-score'></span></div>
                     </div>
                     <div id='restart-prompt' class='pulse'>Press R to try again!</div>
+                </div>
+                <div id='touch-zone'>
+                    <div id='joystick-area'>
+                        <div id='joystick' class='touch-circle'>
+                            <div id='joystick-thumb' class='touch-circle'></div>
+                        </div>
+                    </div>
+                    <!-- <div id='jump-btn' class='touch-circle'>
+                        <div id='jump-touch' class='touch-circle'></div>
+                    </div> -->
                 </div>
             </div>
         </div>

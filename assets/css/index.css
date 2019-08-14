@@ -1,4 +1,5 @@
 @import 'reset.css';
+@import 'touch.css';
 @font-face {
     font-family: 'Chonky';
     src: url('../fonts/Chonkly.otf') format('opentype');
@@ -191,10 +192,6 @@ canvas {
 }
 
 #restart-prompt {
-    position: absolute;
-    top: -3rem;
-    left: 0;
-    width: 100%;
     height: 2.25rem;
     font-size: 2.25rem;
     text-align: center;
@@ -234,7 +231,7 @@ aside header {
     padding-right: 1rem;
 }
 
-#instruction-list {
+.instruction-list {
     box-sizing: border-box;
     width: 100%;
     padding: 1rem 5rem;
@@ -245,8 +242,12 @@ aside header {
     font-size: 1.5rem;
 }
 
-#instruction-list li {
+.instruction-list li {
     margin-bottom: 1rem;
+}
+
+.hidden {
+    display: none;
 }
 
 #wallslide-header {

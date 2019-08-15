@@ -232,6 +232,9 @@ VirtualJoystick.prototype._onMouseDown = function (event) {
 }
 
 VirtualJoystick.prototype._onMouseMove = function (event) {
+    if (this._pressed) {
+        debugger;
+    }
     var x = event.offsetX;
     var y = event.offsetY;
     return this._onMove(x, y);

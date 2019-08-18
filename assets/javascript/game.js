@@ -29,7 +29,7 @@ export default class Game {
         this.heightDisplay = document.getElementById('height-value');
 
         // get start prompt
-        this.startPrompt = document.getElementById('start-prompt');
+        this.startPrompt = document.querySelector('.start-prompt:not(.hidden)');
 
         // get end prompt and value displays
         this.endPrompt = document.getElementById('end-prompt');

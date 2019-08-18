@@ -4,9 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    border: 1px solid red;
     pointer-events: all;
-    visibility: hidden;
 }
 
 #joystick-area {
@@ -45,4 +43,9 @@
     width: 6rem;
     bottom: 1rem;
     right: 1rem;
+}
+
+.restart-prompt.touch {
+    text-decoration: underline;
+    pointer-events: all;
 }

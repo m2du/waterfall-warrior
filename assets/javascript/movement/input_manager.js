@@ -18,6 +18,9 @@ export default class InputManager {
             const jumpBtn = document.getElementById('jump-btn');
             jumpBtn.addEventListener('touchstart', this.jumpBtnDown.bind(this), false);
             jumpBtn.addEventListener('touchend', this.jumpBtnUp.bind(this), false);
+
+            const restartPrompt = document.querySelector('.restart-prompt.touch');
+            restartPrompt.addEventListener('touchstart', this.touchRestart.bind(this), false);
         }
     }
 
@@ -86,5 +89,10 @@ export default class InputManager {
     jumpBtnUp(e) {
         e.keyCode = 32;
         this.keyup(e);
+    }
+
+    touchRestart(e) {
+        e.keyCode = 82;
+        this.keydown(e);
     }
 }

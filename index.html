@@ -28,21 +28,19 @@
                 <li><span class='key'><i class="fas fa-arrow-left"></i></span> / <span class='key'><i class="fas fa-arrow-right"></i></span> + <span class='key'>Space</span> to wall jump</li>
             </ul>
             <ul class='instruction-list touch hidden'>
-                <li><span class='key'><i class="fas fa-arrow-left"></i></span> / <span class='key'><i
-                            class="fas fa-arrow-right"></i></span> to move</li>
-                <li>Press right button to jump</li>
+                <li>Touch & drag in game window to move</li>
+                <li>Tap button to jump</li>
                 <li>Hold jump to go higher</li>
-                <li>Hold <span class='key'><i class="fas fa-arrow-down"></i></span> to fall faster</li>
                 <li id='wallslide-header'>Wall Sliding</li>
                 <li>Wall slide while falling</li>
-                <li>Press jump to perform wall jumps</li>
+                <li>Tap jump to perform wall jumps</li>
             </ul>
         </aside>
         <div id='canvas-border'>
             <div id='canvas-container'>
                 <canvas id='game-canvas'></canvas>
 
-                <div id='touch-zone'>
+                <div id='touch-zone' class='touch hidden'>
                     <div id='joystick-area'>
                         <div id='joystick' class='touch-circle'>
                             <div id='joystick-thumb' class='touch-circle'></div>
@@ -59,8 +57,11 @@
                     <span id='height-value'>0m</span>
                 </div>
 
-                <div id='start-prompt' class='pulse'>
+                <div class='start-prompt pulse keyboard'>
                     Press SPACE to start!
+                </div>
+                <div class='start-prompt pulse touch hidden'>
+                    Tap JUMP to start!
                 </div>
 
                 <div id='end-prompt'>
@@ -70,7 +71,8 @@
                         <div class='summary-list-item'>Time Bonus: <span id='time-bonus'></span></div>
                         <div class='summary-list-item'>Total Score: <span id='final-score'></span></div>
                     </div>
-                    <div id='restart-prompt' class='pulse'>Press R to try again!</div>
+                    <div class='restart-prompt pulse keyboard'>Press R to try again!</div>
+                    <div class='restart-prompt pulse touch hidden'>Tap here to try again!</div>
                 </div>
             </div>
         </div>

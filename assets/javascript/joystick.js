@@ -177,21 +177,6 @@ VirtualJoystick.prototype._onDown = function (x, y) {
     this._stickX = x;
     this._stickY = y;
 
-    // if (this._limitStickTravel === true) {
-    //     var deltaX = this.deltaX();
-    //     var deltaY = this.deltaY();
-    //     var stickDistance = Math.sqrt((deltaX * deltaX) + (deltaY * deltaY));
-    //     if (stickDistance > this._stickRadius) {
-    //         var stickNormalizedX = deltaX / stickDistance;
-    //         var stickNormalizedY = deltaY / stickDistance;
-
-    //         this._stickX = stickNormalizedX * this._stickRadius + this._baseX;
-    //         this._stickY = stickNormalizedY * this._stickRadius + this._baseY;
-    //     }
-    // }
-
-    console.log(`${this._stickX}, ${this._stickY}`);
-
     this._stickEl.style.display = "";
     let boundingRect = this._stickEl.getBoundingClientRect();
     const stickWidth = boundingRect.width, stickHeight = boundingRect.height;
@@ -249,7 +234,6 @@ VirtualJoystick.prototype._onMouseUp = function (event) {
 }
 
 VirtualJoystick.prototype._onMouseDown = function (event) {
-    console.log(event);
     event.preventDefault();
     var x = event.offsetX;
     var y = event.offsetY;
@@ -282,8 +266,6 @@ VirtualJoystick.prototype._onTouchStart = function (event) {
     var touch = event.changedTouches[0];
     // set the touchIdx of this joystick
     this._touchIdx = touch.identifier;
-
-    console.log(touch);
 
     // forward the action
     var x = touch.pageX - this.touchOffsetLeft;

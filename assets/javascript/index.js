@@ -1,5 +1,4 @@
 import {GAME_WIDTH, GAME_HEIGHT} from './constants';
-import {dragElement} from './util/drag_util';
 import VirtualJoystick from './joystick';
 import Game from './game';
 import GameView from './game_view';
@@ -20,8 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
             baseElement: document.getElementById('joystick'),
             stickElement: document.getElementById('joystick-thumb'),
             limitStickTravel: true,
-            // stationaryBase: true, 
-            mouseSupport: true
         });
     }
 

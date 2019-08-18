@@ -209,12 +209,12 @@ VirtualJoystick.prototype._onMove = function (x, y) {
             var deltaX = this.deltaX();
             var deltaY = this.deltaY();
             var stickDistance = Math.sqrt((deltaX * deltaX) + (deltaY * deltaY));
-            if (stickDistance > width / 1.5) {
+            if (stickDistance > width) {
                 var stickNormalizedX = deltaX / stickDistance;
                 var stickNormalizedY = deltaY / stickDistance;
 
-                this._stickX = stickNormalizedX * width / 1.5 + this._baseX;
-                this._stickY = stickNormalizedY * height / 1.5 + this._baseY;
+                this._stickX = stickNormalizedX * width + this._baseX;
+                this._stickY = stickNormalizedY * height + this._baseY;
             }
         }
         

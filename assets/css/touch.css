@@ -43,6 +43,12 @@
     width: 6rem;
     bottom: 1rem;
     right: 1rem;
+    padding: 1rem;
+}
+
+#jump-btn img {
+    width: 100%;
+    height: 100%;
 }
 
 .restart-prompt.touch {

@@ -21,9 +21,9 @@ const BLOCK_MAX_SPEED = -150;
 const MAX_SCORES = 10;
 
 export default class Game {
-    constructor() {
+    constructor(joystick) {
         // initialize input manager
-        this.inputManager = new InputManager(this);
+        this.inputManager = new InputManager(this, joystick);
 
         // get height display
         this.heightDisplay = document.getElementById('height-value');

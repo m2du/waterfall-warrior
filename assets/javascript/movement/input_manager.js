@@ -1,5 +1,5 @@
 export default class InputManager {
-    constructor(game) {
+    constructor(game, joystick) {
         this.game = game;
         this.inputFlags = {
             dirX: 0,
@@ -11,6 +11,10 @@ export default class InputManager {
         this.keydown = this.keydown.bind(this);
         this.keyup = this.keyup.bind(this);
         this.addListeners();
+
+        if (joystick) {
+            joystick.inputManager = this;
+        }
     }
 
     addListeners() {

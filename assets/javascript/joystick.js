@@ -24,6 +24,10 @@ const VirtualJoystick = function (opts) {
     this._pressed = false;
     this._touchIdx = null;
 
+    const touchArea = document.getElementById('canvas-border');
+    this.touchOffsetLeft = touchArea.offsetLeft;
+    this.touchOffsetTop = touchArea.offsetTop;
+
     if (this._stationaryBase === true) {
         this._baseEl.style.display = "";
         this._baseEl.style.left = (this._baseX - this._baseEl.width / 2) + "px";
@@ -151,6 +155,11 @@ VirtualJoystick.prototype._onUp = function () {
 
         this._baseX = this._baseY = 0;
         this._stickX = this._stickY = 0;
+
+        if (this.inputManager) {
+            this.inputManager.inputFlags.dirX = 0;
+            this.inputManager.inputFlags.dirY = 0;
+        }
     }
 }
 
@@ -199,7 +208,6 @@ VirtualJoystick.prototype._onMove = function (x, y) {
             var deltaY = this.deltaY();
             var stickDistance = Math.sqrt((deltaX * deltaX) + (deltaY * deltaY));
             if (stickDistance > width) {
-                debugger;
                 var stickNormalizedX = deltaX / stickDistance;
                 var stickNormalizedY = deltaY / stickDistance;
 
@@ -208,7 +216,22 @@ VirtualJoystick.prototype._onMove = function (x, y) {
             }
         }
         
-        console.log(x, y);
+        if (this.inputManager) {
+            const inputFlags = this.inputManager.inputFlags;
+            if (this.left()) {
+                inputFlags.dirX = -1;
+            } else if (this.right()) {
+                inputFlags.dirX = 1;
+            } else {
+                inputFlags.dirX = 0;
+            }
+
+            if (this.down()) {
+                inputFlags.dirY = -1;
+            } else {
+                inputFlags.dirY = 0;
+            }
+        }
 
         this._move(this._stickEl.style, (this._stickX - width / 2), (this._stickY - height / 2));
     }
@@ -261,9 +284,11 @@ VirtualJoystick.prototype._onTouchStart = function (event) {
     // set the touchIdx of this joystick
     this._touchIdx = touch.identifier;
 
+    console.log(touch);
+
     // forward the action
-    var x = touch.pageX;
-    var y = touch.pageY;
+    var x = touch.pageX - this.touchOffsetLeft;
+    var y = touch.pageY - this.touchOffsetTop;
     return this._onDown(x, y)
 }
 
@@ -303,8 +328,8 @@ VirtualJoystick.prototype._onTouchMove = function (event) {
 
     event.preventDefault();
 
-    var x = touch.pageX;
-    var y = touch.pageY;
+    var x = touch.pageX - this.touchOffsetLeft;
+    var y = touch.pageY - this.touchOffsetTop;
     return this._onMove(x, y)
 }
 

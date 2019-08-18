@@ -190,6 +190,8 @@ VirtualJoystick.prototype._onDown = function (x, y) {
     //     }
     // }
 
+    console.log(`${this._stickX}, ${this._stickY}`);
+
     this._stickEl.style.display = "";
     let boundingRect = this._stickEl.getBoundingClientRect();
     const stickWidth = boundingRect.width, stickHeight = boundingRect.height;
@@ -207,12 +209,12 @@ VirtualJoystick.prototype._onMove = function (x, y) {
             var deltaX = this.deltaX();
             var deltaY = this.deltaY();
             var stickDistance = Math.sqrt((deltaX * deltaX) + (deltaY * deltaY));
-            if (stickDistance > width) {
+            if (stickDistance > width / 1.5) {
                 var stickNormalizedX = deltaX / stickDistance;
                 var stickNormalizedY = deltaY / stickDistance;
 
-                this._stickX = stickNormalizedX * width + this._baseX;
-                this._stickY = stickNormalizedY * height + this._baseY;
+                this._stickX = stickNormalizedX * width / 1.5 + this._baseX;
+                this._stickY = stickNormalizedY * height / 1.5 + this._baseY;
             }
         }
         

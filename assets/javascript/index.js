@@ -17,6 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
         
         document.getElementById('restart-prompt').classList.add('hidden');
         
+        document.getElementById('touch-zone').style.visibility = "visible";
+
         joystick = new VirtualJoystick({
             container: document.getElementById('joystick-area'),
             baseElement: document.getElementById('joystick'),

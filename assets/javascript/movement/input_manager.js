@@ -14,6 +14,10 @@ export default class InputManager {
 
         if (joystick) {
             joystick.inputManager = this;
+
+            const jumpBtn = document.getElementById('jump-btn');
+            jumpBtn.addEventListener('touchstart', this.jumpBtnDown.bind(this), false);
+            jumpBtn.addEventListener('touchend', this.jumpBtnUp.bind(this), false);
         }
     }
 
@@ -72,5 +76,15 @@ export default class InputManager {
             inputFlags.jumpPressed = false;
             inputFlags.newJump = true;
         }
+    }
+
+    jumpBtnDown(e) {
+        e.keyCode = 32;
+        this.keydown(e);
+    }
+
+    jumpBtnUp(e) {
+        e.keyCode = 32;
+        this.keyup(e);
     }
 }

@@ -171,7 +171,7 @@ VirtualJoystick.prototype._onDown = function (x, y) {
         this._baseEl.style.display = "";
         let boundingRect = this._baseEl.getBoundingClientRect();
         const baseWidth = boundingRect.width, baseHeight = boundingRect.height;
-        this._move(this._baseEl.style, (this._baseX - baseWidth / 2), (this._baseY - baseHeight / 2));
+        this._move(this._baseEl.style, (this._baseX - baseWidth / 2), this._baseY);
     }
 
     this._stickX = x;
@@ -195,7 +195,7 @@ VirtualJoystick.prototype._onDown = function (x, y) {
     this._stickEl.style.display = "";
     let boundingRect = this._stickEl.getBoundingClientRect();
     const stickWidth = boundingRect.width, stickHeight = boundingRect.height;
-    this._move(this._stickEl.style, (this._stickX - stickWidth / 2), (this._stickY - stickHeight / 2));
+    this._move(this._stickEl.style, (this._stickX - stickWidth / 2), (this._stickY + stickHeight / 2));
 }
 
 VirtualJoystick.prototype._onMove = function (x, y) {
@@ -235,7 +235,7 @@ VirtualJoystick.prototype._onMove = function (x, y) {
             }
         }
 
-        this._move(this._stickEl.style, (this._stickX - width / 2), (this._stickY - height / 2));
+        this._move(this._stickEl.style, (this._stickX - width / 2), (this._stickY + height / 2));
     }
 }
 
@@ -257,9 +257,6 @@ VirtualJoystick.prototype._onMouseDown = function (event) {
 }
 
 VirtualJoystick.prototype._onMouseMove = function (event) {
-    if (this._pressed) {
-        debugger;
-    }
     var x = event.offsetX;
     var y = event.offsetY;
     return this._onMove(x, y);

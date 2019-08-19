@@ -12,6 +12,10 @@ Waterfall Warrior is a game where the goal of the player is to jump on falling p
  - Robust movement: In addition to basic ground movement and jumping, the player is able to double jump, wallslide, and walljump.
  - Infinite scrolling: The player can progress as long as they want through a random sequence of falling platforms
  - Score tracking: The top 10 scores of the player are stored locally so they can viewed and challenged again at a later date
+ - Mobile support: Touch controls are available on mobile in the form of a virtual joystick for movement and jump button.
+
+ ### URL QR Code
+ ![QR Code](./readme/waterfall-warrior-qr.png)
 
 ## Architecture and Technologies
  - Vanilla JavaScript for game logic

@@ -1,4 +1,6 @@
 # Waterfall Warrior
+[Live Link](https://m2du.github.io/waterfall-warrior/)
+
 ![gameplay preview](./readme/ww-preview.gif)
 
 ## Background and Overview
